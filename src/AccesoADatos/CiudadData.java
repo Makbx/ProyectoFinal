@@ -97,6 +97,27 @@ public class CiudadData {
         }
         return ciudad;
     }
+    public Ciudad buscarCiudadPorNombre(String ciu) {
+        String sql = "SELECT idCiudad, pais, provincia FROM ciudad WHERE nombre = ? AND estado = 1";
+        Ciudad ciudad = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, ciu);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ciudad = new Ciudad();
+                ciudad.setIdCiudad(rs.getInt("idCiudad"));
+                ciudad.setNombre(rs.getString("nombre"));
+                ciudad.setPais(rs.getString("pais"));
+                ciudad.setProvincia(rs.getString("provincia"));
+                ciudad.setEstado(rs.getBoolean("estado"));
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ciudad");
+        }
+        return ciudad;
+    }
     public List<Ciudad> listarCiudades() {
         String sql = "SELECT idCiudad,nombre, pais, provincia, estado FROM ciudad WHERE estado = 1";
         ArrayList<Ciudad> ciudades = new ArrayList<>();

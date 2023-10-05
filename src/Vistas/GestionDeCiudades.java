@@ -5,6 +5,9 @@
 package Vistas;
 
 import Entidades.Ciudad;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -77,6 +80,11 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
         });
 
         JBeliminar.setText("Eliminar");
+        JBeliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBeliminarActionPerformed(evt);
+            }
+        });
 
         JTciudades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,20 +116,20 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(RBestado)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(JTFpais, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JTFprovincia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JTFciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(JTFpais, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                                .addComponent(JTFprovincia)
+                                .addComponent(JTFciudad)))
                         .addGap(17, 17, 17))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addComponent(JBeliminar)
                 .addGap(26, 26, 26)
                 .addComponent(JBguardar)
@@ -151,13 +159,13 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                     .addComponent(RBestado)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBsalir)
                     .addComponent(JBeliminar)
                     .addComponent(JBguardar))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,12 +173,44 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
 
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
+        if(JTFciudad.getText().isEmpty() || JTFpais.getText().isEmpty() || JTFprovincia.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+        }else{
+            try {
+                String nombre = JTFciudad.getText();
+                String pais = JTFpais.getText();
+                String provincia = JTFprovincia.getText();
+                boolean estado = RBestado.isSelected();
+                
+                Ciudad ciu = new Ciudad(nombre,pais,provincia,estado);
+                //Buscamos si el dni ya esta en la base de datos
+                Ciudad aux = Menu.ciudadData.buscarCiudadPorNombre(nombre);
+                
+                if(aux == null){
+                    Menu.ciudadData.guardadCiudad(ciu);
+                    limpiarTabla();
+                    cargartabla();
+                }else{
+                  JOptionPane.showMessageDialog(null, "La ciudad ya esta en la base de datos");  
+                }
+                JTFciudad.setText("");
+                JTFpais.setText("");
+                JTFprovincia.setText("");
+                RBestado.setSelected(false);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese los campos correctamente");  
+            }
+        }
     }//GEN-LAST:event_JBguardarActionPerformed
 
     private void JBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBsalirActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_JBsalirActionPerformed
+
+    private void JBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBeliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBeliminarActionPerformed
     private void armarCabecera(){
         modelo.addColumn("Id");
         modelo.addColumn("Ciudad");
