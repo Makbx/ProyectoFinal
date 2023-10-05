@@ -98,7 +98,7 @@ public class CiudadData {
         return ciudad;
     }
     public Ciudad buscarCiudadPorNombre(String ciu) {
-        String sql = "SELECT idCiudad, pais, provincia FROM ciudad WHERE nombre = ? AND estado = 1";
+        String sql = "SELECT * FROM ciudad WHERE nombre = ? AND estado = 1";
         Ciudad ciudad = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);

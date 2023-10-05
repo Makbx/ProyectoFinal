@@ -114,9 +114,9 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel1)
-                        .addContainerGap(180, Short.MAX_VALUE))
+                        .addContainerGap(265, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(RBestado)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -126,7 +126,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                         .addGap(17, 17, 17))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -183,9 +183,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                 boolean estado = RBestado.isSelected();
                 
                 Ciudad ciu = new Ciudad(nombre,pais,provincia,estado);
-                //Buscamos si el dni ya esta en la base de datos
                 Ciudad aux = Menu.ciudadData.buscarCiudadPorNombre(nombre);
-                
                 if(aux == null){
                     Menu.ciudadData.guardadCiudad(ciu);
                     limpiarTabla();
