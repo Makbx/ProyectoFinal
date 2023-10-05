@@ -20,6 +20,60 @@ public class CiudadData {
     public CiudadData(){
         con=Conexion.getConexion();
     }
+    public void guardadCiudad(Ciudad ciudad){
+        String sql="INSERT INTO ciudad (nombre, pais, provincia, estado)"
+                + "VALUE(? , ?, ?, ?)";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,ciudad.getNombre());
+            ps.setString(2,ciudad.getPais());
+            ps.setString(3, ciudad.getProvincia());
+            ps.setBoolean(4, ciudad.isActivo());
+            ps.executeUpdate();
+            ResultSet rs=ps.getGeneratedKeys(); 
+            if(rs.next()){
+                ciudad.setIdCiudad(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Ciudad Guardada");
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showConfirmDialog(null, "Error al acceder a la tabla Ciudad");
+        }
+    }
+    public void modificarCiudad(Ciudad ciudad){
+        String sql="UPDATE alumno SET nombre = ?, pais = ?, provincia = ?, estado = ?"
+                + "WHERE idCiudad = ?";
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, ciudad.getNombre());
+            ps.setString(2, ciudad.getPais());
+            ps.setString(3, ciudad.getProvincia());
+            ps.setBoolean(4, ciudad.isActivo());
+            ps.setInt(5, ciudad.getIdCiudad());
+            int exito = ps.executeUpdate();
+            if(exito==1){
+                JOptionPane.showMessageDialog(null, "Ciudad modificada");
+            }
+            ps.close();        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ciudad");
+        }
+    }
+    public void eliminarCiudad(int id){ //Borrado logico consiste en poner su estado a 0 no borrarlo
+        String sql="UPDATE ciudad SET estado = 0 WHERE idCiudad =?";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int exito = ps.executeUpdate();
+            if(exito==1){
+                JOptionPane.showMessageDialog(null, "Ciudad Eliminada");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ciudad");
+        }
+    }    
     public Ciudad buscarCiudadPorId(int id) {
         String sql = "SELECT nombre, pais, provincia FROM ciudad WHERE idCiudad = ? AND estado = 1";
         Ciudad ciudad = null;

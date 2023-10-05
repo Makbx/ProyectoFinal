@@ -44,6 +44,8 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMciudad = new javax.swing.JMenuItem();
+        JMciudad = new javax.swing.JMenu();
+        JMgestionciudad = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,7 +61,7 @@ public class Menu extends javax.swing.JFrame {
             .addGap(0, 700, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Cliente");
 
         jMciudad.setText("Ciudades");
         jMciudad.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +72,18 @@ public class Menu extends javax.swing.JFrame {
         jMenu1.add(jMciudad);
 
         jMenuBar1.add(jMenu1);
+
+        JMciudad.setText("Administracion");
+
+        JMgestionciudad.setText("Gestion de ciudades");
+        JMgestionciudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMgestionciudadActionPerformed(evt);
+            }
+        });
+        JMciudad.add(JMgestionciudad);
+
+        jMenuBar1.add(JMciudad);
 
         jMenu2.setText("Salir");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -91,7 +105,9 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JDPescritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(JDPescritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,6 +127,16 @@ public class Menu extends javax.swing.JFrame {
         JDPescritorio.add(ciudades);
         JDPescritorio.moveToFront(ciudades);
     }//GEN-LAST:event_jMciudadActionPerformed
+
+    private void JMgestionciudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMgestionciudadActionPerformed
+        // TODO add your handling code here:
+        GestionDeCiudades gestionciudades = new GestionDeCiudades();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        gestionciudades.setVisible(true);
+        JDPescritorio.add(gestionciudades);
+        JDPescritorio.moveToFront(gestionciudades);        
+    }//GEN-LAST:event_JMgestionciudadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,6 +175,8 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane JDPescritorio;
+    private javax.swing.JMenu JMciudad;
+    private javax.swing.JMenuItem JMgestionciudad;
     private javax.swing.JMenuItem jMciudad;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
