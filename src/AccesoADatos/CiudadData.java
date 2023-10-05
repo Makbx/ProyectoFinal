@@ -42,8 +42,7 @@ public class CiudadData {
         }
     }
     public void modificarCiudad(Ciudad ciudad){
-        String sql="UPDATE alumno SET nombre = ?, pais = ?, provincia = ?, estado = ?"
-                + "WHERE idCiudad = ?";
+        String sql="UPDATE ciudad SET nombre = ?, pais = ?, provincia = ?, estado = ? WHERE idCiudad = ?";
         try {
             PreparedStatement ps= con.prepareStatement(sql);
             ps.setString(1, ciudad.getNombre());

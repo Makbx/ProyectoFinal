@@ -54,6 +54,8 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
         JBeliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTciudades = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        JTFid = new javax.swing.JTextField();
 
         jLabel1.setText("Agregando Ciudades");
 
@@ -99,50 +101,56 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(JTciudades);
 
+        jLabel6.setText("ID de ciudad:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1)
-                        .addContainerGap(265, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(RBestado)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(JTFpais, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                                .addComponent(JTFprovincia)
-                                .addComponent(JTFciudad)))
-                        .addGap(17, 17, 17))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                            .addComponent(JTFpais, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JTFprovincia, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JTFciudad)
+                            .addComponent(JTFid, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                        .addGap(11, 11, 11))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JBeliminar)
+                        .addGap(26, 26, 26)
+                        .addComponent(JBguardar)
+                        .addGap(26, 26, 26)
+                        .addComponent(JBsalir)
+                        .addGap(31, 31, 31)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(JBeliminar)
-                .addGap(26, 26, 26)
-                .addComponent(JBguardar)
-                .addGap(26, 26, 26)
-                .addComponent(JBsalir)
-                .addGap(37, 37, 37))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(182, 182, 182)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(JTFpais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -165,7 +173,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                     .addComponent(JBsalir)
                     .addComponent(JBeliminar)
                     .addComponent(JBguardar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -174,9 +182,15 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
         if(JTFciudad.getText().isEmpty() || JTFpais.getText().isEmpty() || JTFprovincia.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos menos id");
         }else{
             try {
+                int idCiu;
+                if(JTFid.getText().isEmpty()){
+                    idCiu = 0;
+                }else{
+                    idCiu = Integer.parseInt(JTFid.getText());
+                }
                 String nombre = JTFciudad.getText();
                 String pais = JTFpais.getText();
                 String provincia = JTFprovincia.getText();
@@ -188,9 +202,15 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                     Menu.ciudadData.guardadCiudad(ciu);
                     limpiarTabla();
                     cargartabla();
+                }else if(idCiu != 0){
+                    ciu.setIdCiudad(idCiu);
+                    Menu.ciudadData.modificarCiudad(ciu);
+                    limpiarTabla();
+                    cargartabla();
                 }else{
-                  JOptionPane.showMessageDialog(null, "La ciudad ya esta en la base de datos");  
+                  JOptionPane.showMessageDialog(null, "La ciudad ya esta en la base de datos");                      
                 }
+                JTFid.setText("");
                 JTFciudad.setText("");
                 JTFpais.setText("");
                 JTFprovincia.setText("");
@@ -208,6 +228,26 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
 
     private void JBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBeliminarActionPerformed
         // TODO add your handling code here:
+        if(JTFid.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo Codigo no puede estar vacio");
+        }else{
+            try {
+                int idCiu = Integer.parseInt(JTFid.getText());
+                int eleccion = JOptionPane.showConfirmDialog(null, "¿Estas seguro/a de eliminar la ciudad?","", JOptionPane.YES_NO_OPTION);
+                if(eleccion == JOptionPane.YES_OPTION){
+                    Menu.ciudadData.eliminarCiudad(idCiu);
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se elimino la ciudad");
+                }
+                JTFid.setText("");
+                JTFciudad.setText("");
+                JTFpais.setText("");
+                JTFprovincia.setText("");
+                RBestado.setSelected(false);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null,"Ingrese el id correctamente");
+            }
+        }  
     }//GEN-LAST:event_JBeliminarActionPerformed
     private void armarCabecera(){
         modelo.addColumn("Id");
@@ -239,6 +279,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBguardar;
     private javax.swing.JButton JBsalir;
     private javax.swing.JTextField JTFciudad;
+    private javax.swing.JTextField JTFid;
     private javax.swing.JTextField JTFpais;
     private javax.swing.JTextField JTFprovincia;
     private javax.swing.JTable JTciudades;
@@ -248,6 +289,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
