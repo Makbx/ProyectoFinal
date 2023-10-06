@@ -46,6 +46,7 @@ public class Menu extends javax.swing.JFrame {
         jMciudad = new javax.swing.JMenuItem();
         JMciudad = new javax.swing.JMenu();
         JMgestionciudad = new javax.swing.JMenuItem();
+        JMalojamiento = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,6 +83,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         JMciudad.add(JMgestionciudad);
+
+        JMalojamiento.setText("Gestion de alojamientos");
+        JMalojamiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMalojamientoActionPerformed(evt);
+            }
+        });
+        JMciudad.add(JMalojamiento);
 
         jMenuBar1.add(JMciudad);
 
@@ -138,6 +147,16 @@ public class Menu extends javax.swing.JFrame {
         JDPescritorio.moveToFront(gestionciudades);        
     }//GEN-LAST:event_JMgestionciudadActionPerformed
 
+    private void JMalojamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMalojamientoActionPerformed
+        // TODO add your handling code here:
+        GestionDeAlojamientos gestionalojamiento = new GestionDeAlojamientos();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        gestionalojamiento.setVisible(true);
+        JDPescritorio.add(gestionalojamiento);
+        JDPescritorio.moveToFront(gestionalojamiento);   
+    }//GEN-LAST:event_JMalojamientoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -175,6 +194,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane JDPescritorio;
+    private javax.swing.JMenuItem JMalojamiento;
     private javax.swing.JMenu JMciudad;
     private javax.swing.JMenuItem JMgestionciudad;
     private javax.swing.JMenuItem jMciudad;
