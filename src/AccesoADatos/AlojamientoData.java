@@ -88,9 +88,11 @@ public class AlojamientoData {
             while (rs.next()) {
                 alojamiento = new Alojamiento();
                 alojamiento.setIdAlojamiento(rs.getInt("idAlojamiento"));
-                alojamiento.setCiudad(ciuData.buscarCiudadPorId(rs.getInt("idCiudad")));
+    //            alojamiento.setCiudad(ciuData.buscarCiudadPorId(rs.getInt("idCiudad")));
                 alojamiento.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 alojamiento.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                alojamiento.setTipo(rs.getString("tipo"));
+                alojamiento.setCosto(rs.getDouble("costoDiario"));
                 alojamiento.setEstado(rs.getBoolean("estado"));
                 alojamientos.add(alojamiento);
             }

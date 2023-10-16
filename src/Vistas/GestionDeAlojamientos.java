@@ -5,6 +5,10 @@
 package Vistas;
 
 import Entidades.Alojamiento;
+import Entidades.Ciudad;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,10 +26,14 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
             return false;
         }
     };
+
+    private Ciudad ciudadSelec;
     public GestionDeAlojamientos() {
         initComponents();
+        cargarCombo();
         armarCabecera();
         cargartabla();
+
     }
 
     /**
@@ -55,6 +63,8 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         JBsalir = new javax.swing.JButton();
         JBguardar = new javax.swing.JButton();
         JBeliminar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        CBciudades = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Agregando Alojamientos");
 
@@ -104,6 +114,8 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setText("Ciudades:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,25 +124,6 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(RBestado)
-                    .addComponent(JDCfin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(JTFalojamiento)
-                    .addComponent(JDCinicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JTFtipo)
-                    .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JBeliminar)
@@ -139,6 +132,30 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(JBsalir)
                 .addGap(68, 68, 68))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JDCfin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JTFtipo)
+                    .addComponent(CBciudades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JTFalojamiento)
+                    .addComponent(JDCinicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RBestado)
+                            .addComponent(jLabel1)
+                            .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,6 +167,10 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(JTFalojamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(CBciudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(JDCinicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -171,9 +192,9 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(RBestado)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBsalir)
                     .addComponent(JBguardar)
@@ -186,6 +207,33 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
 
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
+        if(JDCinicio.toString().isEmpty() || JDCfin.toString().isEmpty() || JTFtipo.getText().isEmpty() || JTFcosto.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+        }else{
+            try {
+                ciudadSelec = (Ciudad) CBciudades.getSelectedItem();
+                LocalDate fechaIni = JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fechaFin = JDCfin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                String tipo = JTFtipo.getText();
+                double costo = Integer.parseInt(JTFcosto.getText());
+                boolean estado = RBestado.isSelected();
+                
+                Alojamiento alo = new Alojamiento(ciudadSelec, fechaIni, fechaFin, tipo, costo, estado);
+
+                Menu.alojamientoData.guardadAlojamiento(alo);
+
+                JTFalojamiento.setText("");
+                JDCinicio.setDate(null);
+                JDCfin.setDate(null);
+                JTFtipo.setText("");
+                JTFcosto.setText("");
+                RBestado.setSelected(false);
+                limpiarTabla();
+                cargartabla();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese los campos correctamente");  
+            }
+        }
     }//GEN-LAST:event_JBguardarActionPerformed
 
     private void JBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBeliminarActionPerformed
@@ -198,14 +246,14 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBsalirActionPerformed
     private void armarCabecera(){
         modelo.addColumn("ID Alojamiento");
-        modelo.addColumn("ID Ciudad");
+        modelo.addColumn("Ciudad");
         modelo.addColumn("Fecha de Inicio");
         modelo.addColumn("Fecha de Fin");
         modelo.addColumn("Tipo");
         modelo.addColumn("Costo diario");
         modelo.addColumn("Estado");
         
-        JTalojamiento.setModel(modelo);  
+        JTalojamiento.setModel(modelo);
     }
     private void limpiarTabla(){
         int f = JTalojamiento.getRowCount() - 1;
@@ -213,11 +261,15 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
             modelo.removeRow(f);
         }
     }
+    private void cargarCombo() {
+        for (Ciudad ciu : Menu.ciudadData.listarCiudades()) {
+            CBciudades.addItem(ciu);
+        }
+    }
     private void cargartabla(){
         for (Alojamiento alojamiento : Menu.alojamientoData.listarAlojamientos()) {
                 modelo.addRow(new Object[]{
                     alojamiento.getIdAlojamiento(),
-                    alojamiento.getCiudad().getIdCiudad(),
                     alojamiento.getFechaInicio(),
                     alojamiento.getFechaFin(),
                     alojamiento.getTipo(),
@@ -228,6 +280,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Ciudad> CBciudades;
     private javax.swing.JButton JBeliminar;
     private javax.swing.JButton JBguardar;
     private javax.swing.JButton JBsalir;
@@ -245,6 +298,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

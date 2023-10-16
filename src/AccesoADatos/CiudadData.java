@@ -82,7 +82,7 @@ public class CiudadData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 ciudad = new Ciudad();
-                ciudad.setIdCiudad(rs.getInt("idCiudad"));
+                ciudad.setIdCiudad(id);
                 ciudad.setNombre(rs.getString("nombre"));
                 ciudad.setPais(rs.getString("pais"));
                 ciudad.setProvincia(rs.getString("provincia"));
@@ -96,7 +96,7 @@ public class CiudadData {
         }
         return ciudad;
     }
-    public Ciudad buscarCiudadPorNombre(String ciu) {
+        public Ciudad buscarCiudadPorNombre(String ciu) {
         String sql = "SELECT * FROM ciudad WHERE nombre = ? AND estado = 1";
         Ciudad ciudad = null;
         try {
