@@ -47,6 +47,9 @@ public class Menu extends javax.swing.JFrame {
         JMciudad = new javax.swing.JMenu();
         JMgestionciudad = new javax.swing.JMenuItem();
         JMalojamiento = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        JMdeciudades = new javax.swing.JMenuItem();
+        JMdealojamientos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,6 +96,26 @@ public class Menu extends javax.swing.JFrame {
         JMciudad.add(JMalojamiento);
 
         jMenuBar1.add(JMciudad);
+
+        jMenu3.setText("Consultas");
+
+        JMdeciudades.setText("De Ciudades");
+        JMdeciudades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMdeciudadesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(JMdeciudades);
+
+        JMdealojamientos.setText("De Alojamientos");
+        JMdealojamientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMdealojamientosActionPerformed(evt);
+            }
+        });
+        jMenu3.add(JMdealojamientos);
+
+        jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Salir");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,6 +178,14 @@ public class Menu extends javax.swing.JFrame {
         JDPescritorio.moveToFront(gestionalojamiento);   
     }//GEN-LAST:event_JMalojamientoActionPerformed
 
+    private void JMdeciudadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMdeciudadesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JMdeciudadesActionPerformed
+
+    private void JMdealojamientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMdealojamientosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JMdealojamientosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -194,10 +225,13 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JDesktopPane JDPescritorio;
     private javax.swing.JMenuItem JMalojamiento;
     private javax.swing.JMenu JMciudad;
+    private javax.swing.JMenuItem JMdealojamientos;
+    private javax.swing.JMenuItem JMdeciudades;
     private javax.swing.JMenuItem JMgestionciudad;
     private javax.swing.JMenuItem jMciudad;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }

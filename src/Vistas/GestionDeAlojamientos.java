@@ -220,17 +220,33 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         }else{
             try {
+                int idAlo;
+                if(JTFalojamiento.getText().isEmpty()){
+                    idAlo = 0;
+                }else{
+                    idAlo = Integer.parseInt(JTFalojamiento.getText());
+                }
                 String nombre = JTFnombre.getText();
                 ciudadSelec = (Ciudad) CBciudades.getSelectedItem();
                 LocalDate fechaIni = JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate fechaFin = JDCfin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 String tipo = JTFtipo.getText();
-                double costo = Integer.parseInt(JTFcosto.getText());
+                double costo = Double.parseDouble(JTFcosto.getText());// Integer.parseInt(JTFcosto.getText());
                 boolean estado = RBestado.isSelected();
                 
                 Alojamiento alo = new Alojamiento(nombre,ciudadSelec, fechaIni, fechaFin, tipo, costo, estado);
-
-                Menu.alojamientoData.guardadAlojamiento(alo);
+                if(idAlo == 0){
+                    Menu.alojamientoData.guardadAlojamiento(alo);
+                }else{
+                   Alojamiento aux = Menu.alojamientoData.buscarAlojamientoPorId(idAlo); //Busco si el codigo ya esta en la base de datos
+                    if(aux ==null){
+                        Menu.alojamientoData.guardadAlojamiento(alo);
+                    }else{
+                    alo.setIdAlojamiento(idAlo);
+                    Menu.alojamientoData.modificarAlojamiento(alo);
+                    }
+                }  
+                //Menu.alojamientoData.guardadAlojamiento(alo);
 
                 JTFalojamiento.setText("");
                 JTFnombre.setText("");
@@ -242,6 +258,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 limpiarTabla();
                 cargartabla();
             } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, e);
                 JOptionPane.showMessageDialog(null, "Ingrese los campos correctamente");  
             }
         }
