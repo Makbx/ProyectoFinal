@@ -4,6 +4,7 @@
  */
 package Vistas;
 
+import AccesoADatos.CiudadData;
 import Entidades.Alojamiento;
 import Entidades.Ciudad;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     };
 
     private Ciudad ciudadSelec;
+    public static CiudadData ciudadData;
     public GestionDeAlojamientos() {
         initComponents();
         cargarCombo();
@@ -65,6 +67,8 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         JBeliminar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         CBciudades = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        JTFnombre = new javax.swing.JTextField();
 
         jLabel1.setText("Agregando Alojamientos");
 
@@ -116,13 +120,15 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Ciudades:");
 
+        jLabel9.setText("Nombre:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -141,21 +147,20 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
                 .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JDCfin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JTFtipo)
-                    .addComponent(CBciudades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JTFalojamiento)
-                    .addComponent(JDCinicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RBestado)
-                            .addComponent(jLabel1)
-                            .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(JDCfin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                    .addComponent(JDCinicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CBciudades, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JTFalojamiento, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RBestado, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTFcosto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTFnombre, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTFtipo))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,11 +171,15 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(JTFalojamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(JTFnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(CBciudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(JDCinicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,10 +216,11 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
 
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
-        if(JDCinicio.toString().isEmpty() || JDCfin.toString().isEmpty() || JTFtipo.getText().isEmpty() || JTFcosto.getText().isEmpty()){
+        if(JTFnombre.getText().isEmpty() || JDCinicio.toString().isEmpty() || JDCfin.toString().isEmpty() || JTFtipo.getText().isEmpty() || JTFcosto.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         }else{
             try {
+                String nombre = JTFnombre.getText();
                 ciudadSelec = (Ciudad) CBciudades.getSelectedItem();
                 LocalDate fechaIni = JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate fechaFin = JDCfin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -218,11 +228,12 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 double costo = Integer.parseInt(JTFcosto.getText());
                 boolean estado = RBestado.isSelected();
                 
-                Alojamiento alo = new Alojamiento(ciudadSelec, fechaIni, fechaFin, tipo, costo, estado);
+                Alojamiento alo = new Alojamiento(nombre,ciudadSelec, fechaIni, fechaFin, tipo, costo, estado);
 
                 Menu.alojamientoData.guardadAlojamiento(alo);
 
                 JTFalojamiento.setText("");
+                JTFnombre.setText("");
                 JDCinicio.setDate(null);
                 JDCfin.setDate(null);
                 JTFtipo.setText("");
@@ -238,6 +249,30 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
 
     private void JBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBeliminarActionPerformed
         // TODO add your handling code here:
+        if(JTFalojamiento.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo id de Alojamiento no puede estar vacio");
+        }else{
+            try {
+                int idAlo = Integer.parseInt(JTFalojamiento.getText());
+                int eleccion = JOptionPane.showConfirmDialog(null, "¿Estas seguro/a de eliminar el alojamiento?","", JOptionPane.YES_NO_OPTION);
+                if(eleccion == JOptionPane.YES_OPTION){
+                    Menu.alojamientoData.eliminarAlojamiento(idAlo);
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se elimino el alojamiento");
+                }
+                JTFalojamiento.setText("");
+                JTFnombre.setText("");
+                JDCinicio.setDate(null);
+                JDCfin.setDate(null);
+                JTFtipo.setText("");
+                JTFcosto.setText("");
+                RBestado.setSelected(false);
+                limpiarTabla();
+                cargartabla();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null,"Ingrese el id de Alojamiento correctamente");
+            }
+        }   
     }//GEN-LAST:event_JBeliminarActionPerformed
 
     private void JBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBsalirActionPerformed
@@ -246,6 +281,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBsalirActionPerformed
     private void armarCabecera(){
         modelo.addColumn("ID Alojamiento");
+        modelo.addColumn("Nombre");
         modelo.addColumn("Ciudad");
         modelo.addColumn("Fecha de Inicio");
         modelo.addColumn("Fecha de Fin");
@@ -270,6 +306,8 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         for (Alojamiento alojamiento : Menu.alojamientoData.listarAlojamientos()) {
                 modelo.addRow(new Object[]{
                     alojamiento.getIdAlojamiento(),
+                    alojamiento.getNombre(),
+                    alojamiento.getCiudad().getNombre(),
                     alojamiento.getFechaInicio(),
                     alojamiento.getFechaFin(),
                     alojamiento.getTipo(),
@@ -288,6 +326,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser JDCinicio;
     private javax.swing.JTextField JTFalojamiento;
     private javax.swing.JTextField JTFcosto;
+    private javax.swing.JTextField JTFnombre;
     private javax.swing.JTextField JTFtipo;
     private javax.swing.JTable JTalojamiento;
     private javax.swing.JRadioButton RBestado;
@@ -299,6 +338,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

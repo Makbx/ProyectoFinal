@@ -74,7 +74,7 @@ public class CiudadData {
         }
     }    
     public Ciudad buscarCiudadPorId(int id) {
-        String sql = "SELECT nombre, pais, provincia FROM ciudad WHERE idCiudad = ? AND estado = 1";
+        String sql = "SELECT * FROM ciudad WHERE idCiudad = ?";
         Ciudad ciudad = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -92,7 +92,8 @@ public class CiudadData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ciudad");
+            JOptionPane.showMessageDialog(null, ex);
+             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ciudad");
         }
         return ciudad;
     }

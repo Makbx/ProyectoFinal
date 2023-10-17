@@ -13,6 +13,7 @@ import java.time.LocalDate;
 public class Alojamiento {
     
     private int idAlojamiento;
+    private String nombre;
     private Ciudad ciudad;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -23,7 +24,8 @@ public class Alojamiento {
     public Alojamiento() {
     }
 
-    public Alojamiento(Ciudad ciudad, LocalDate fechaInicio, LocalDate fechaFin, String tipo, double costo, boolean activo) {
+    public Alojamiento(String nombre, Ciudad ciudad, LocalDate fechaInicio, LocalDate fechaFin, String tipo, double costo, boolean activo) {
+        this.nombre = nombre;
         this.ciudad = ciudad;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -32,8 +34,9 @@ public class Alojamiento {
         this.activo = activo;
     }
 
-    public Alojamiento(int idAlojamiento, Ciudad ciudad, LocalDate fechaInicio, LocalDate fechaFin, String tipo, double costo, boolean activo) {
+    public Alojamiento(int idAlojamiento,String nombre, Ciudad ciudad, LocalDate fechaInicio, LocalDate fechaFin, String tipo, double costo, boolean activo) {
         this.idAlojamiento = idAlojamiento;
+        this.nombre = nombre;
         this.ciudad = ciudad;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -96,6 +99,14 @@ public class Alojamiento {
 
     public void setEstado(boolean activo) {
         this.activo = activo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @Override
