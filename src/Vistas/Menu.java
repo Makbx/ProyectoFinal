@@ -4,10 +4,10 @@
  */
 package Vistas;
 
-import AccesoADatos.AlojamientoData;
-import AccesoADatos.CiudadData;
-import AccesoADatos.PaqueteData;
-import AccesoADatos.PasajeData;
+import accesoADatos.AlojamientoData;
+import accesoADatos.CiudadData;
+import accesoADatos.PaqueteData;
+import accesoADatos.PasajeData;
 
 /**
  *
@@ -44,7 +44,12 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMciudad = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        JMciudad = new javax.swing.JMenu();
+        JMgestionciudad = new javax.swing.JMenuItem();
+        JMalojamiento = new javax.swing.JMenuItem();
+        JMgestionPasajes = new javax.swing.JMenuItem();
+        JMgestionPaquetes = new javax.swing.JMenuItem();
+        JMsalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,14 +57,14 @@ public class Menu extends javax.swing.JFrame {
         JDPescritorio.setLayout(JDPescritorioLayout);
         JDPescritorioLayout.setHorizontalGroup(
             JDPescritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
+            .addGap(0, 1102, Short.MAX_VALUE)
         );
         JDPescritorioLayout.setVerticalGroup(
             JDPescritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 700, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Cliente");
 
         jMciudad.setText("Ciudades");
         jMciudad.addActionListener(new java.awt.event.ActionListener() {
@@ -71,13 +76,49 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Salir");
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu2MouseClicked(evt);
+        JMciudad.setText("Administracion");
+
+        JMgestionciudad.setText("Gestion de Ciudades");
+        JMgestionciudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMgestionciudadActionPerformed(evt);
             }
         });
-        jMenuBar1.add(jMenu2);
+        JMciudad.add(JMgestionciudad);
+
+        JMalojamiento.setText("Gestion de Alojamientos");
+        JMalojamiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMalojamientoActionPerformed(evt);
+            }
+        });
+        JMciudad.add(JMalojamiento);
+
+        JMgestionPasajes.setText("Gestion de Pasajes");
+        JMgestionPasajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMgestionPasajesActionPerformed(evt);
+            }
+        });
+        JMciudad.add(JMgestionPasajes);
+
+        JMgestionPaquetes.setText("Gestion de Paquetes");
+        JMgestionPaquetes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMgestionPaquetesActionPerformed(evt);
+            }
+        });
+        JMciudad.add(JMgestionPaquetes);
+
+        jMenuBar1.add(JMciudad);
+
+        JMsalir.setText("Salir");
+        JMsalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JMsalirMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(JMsalir);
 
         setJMenuBar(jMenuBar1);
 
@@ -85,22 +126,22 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(JDPescritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(JDPescritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JDPescritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(JDPescritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+    private void JMsalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JMsalirMouseClicked
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jMenu2MouseClicked
+    }//GEN-LAST:event_JMsalirMouseClicked
 
     private void jMciudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMciudadActionPerformed
         // TODO add your handling code here:
@@ -111,6 +152,46 @@ public class Menu extends javax.swing.JFrame {
         JDPescritorio.add(ciudades);
         JDPescritorio.moveToFront(ciudades);
     }//GEN-LAST:event_jMciudadActionPerformed
+
+    private void JMgestionciudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMgestionciudadActionPerformed
+        // TODO add your handling code here:
+        GestionDeCiudades gestionciudades = new GestionDeCiudades();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        gestionciudades.setVisible(true);
+        JDPescritorio.add(gestionciudades);
+        JDPescritorio.moveToFront(gestionciudades);        
+    }//GEN-LAST:event_JMgestionciudadActionPerformed
+
+    private void JMalojamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMalojamientoActionPerformed
+        // TODO add your handling code here:
+        GestionDeAlojamientos gestionalojamiento = new GestionDeAlojamientos();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        gestionalojamiento.setVisible(true);
+        JDPescritorio.add(gestionalojamiento);
+        JDPescritorio.moveToFront(gestionalojamiento);   
+    }//GEN-LAST:event_JMalojamientoActionPerformed
+
+    private void JMgestionPasajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMgestionPasajesActionPerformed
+        // TODO add your handling code here:
+        GestionDePasajes gdp = new GestionDePasajes();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        gdp.setVisible(true);
+        JDPescritorio.add(gdp);
+        JDPescritorio.moveToFront(gdp);   
+    }//GEN-LAST:event_JMgestionPasajesActionPerformed
+
+    private void JMgestionPaquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMgestionPaquetesActionPerformed
+        // TODO add your handling code here:
+        GestionDePaquetes gdp = new GestionDePaquetes();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        gdp.setVisible(true);
+        JDPescritorio.add(gdp);
+        JDPescritorio.moveToFront(gdp);   
+    }//GEN-LAST:event_JMgestionPaquetesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,9 +230,14 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane JDPescritorio;
+    private javax.swing.JMenuItem JMalojamiento;
+    private javax.swing.JMenu JMciudad;
+    private javax.swing.JMenuItem JMgestionPaquetes;
+    private javax.swing.JMenuItem JMgestionPasajes;
+    private javax.swing.JMenuItem JMgestionciudad;
+    private javax.swing.JMenu JMsalir;
     private javax.swing.JMenuItem jMciudad;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
