@@ -45,7 +45,6 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
         JCBciudad = new javax.swing.JComboBox<>();
         JTFcosto = new javax.swing.JTextField();
         JRBestado = new javax.swing.JRadioButton();
-        JBbuscar = new javax.swing.JButton();
         JBguardar = new javax.swing.JButton();
         JBeliminar = new javax.swing.JButton();
         JBsalir = new javax.swing.JButton();
@@ -73,12 +72,7 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
 
         JLestado.setText("Estado: ");
 
-        JBbuscar.setText("Buscar");
-        JBbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBbuscarActionPerformed(evt);
-            }
-        });
+        JTFid.setEditable(false);
 
         JBguardar.setText("Guardar");
         JBguardar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,7 +114,7 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(JTpasajes);
 
-        JLnota.setText("Nota: Para modificar o eliminar un pasaje debes buscarlo por id o seleccionarlo de la tabla      ");
+        JLnota.setText("Nota: Para modificar o eliminar un pasaje debes seleccionarlo de la tabla      ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,8 +143,7 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
                             .addComponent(JRBestado))
                         .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JBbuscar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(JBguardar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JBguardar)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(JBsalir)
                                 .addComponent(JBeliminar)))))
@@ -164,16 +157,17 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(JLtitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JLid)
-                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBbuscar))
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JBguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLid, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLtipo)
                     .addComponent(JCBtipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBeliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -181,48 +175,24 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
                         .addGap(5, 5, 5))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(JCBciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JBeliminar)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JLcosto)
-                            .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JLestado)
-                            .addComponent(JRBestado)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addComponent(JBsalir)))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLcosto)
+                    .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JLestado)
+                    .addComponent(JRBestado))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JLnota)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void JBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBbuscarActionPerformed
-        // TODO add your handling code here:
-        List<Pasaje> pasajes=Menu.pasajeData.listarPasajes();
-        int bandera=0;
-        for(Pasaje pas: pasajes){
-            if(Integer.parseInt(JTFid.getText())==pas.getIdPasaje()){
-                bandera=1;
-                JTpasajes.setRowSelectionInterval(pasajes.indexOf(pas), pasajes.indexOf(pas));
-                break;
-            }
-        }
-        if(bandera==0){
-            JOptionPane.showMessageDialog(null, "El id no corresponde a ningun pasaje existente");
-        }else{
-            JBeliminar.setEnabled(true);
-            JBguardar.setText("Modificar");
-        }
-    }//GEN-LAST:event_JBbuscarActionPerformed
 
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
@@ -272,13 +242,17 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
 
     private void JBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBeliminarActionPerformed
         // TODO add your handling code here:
-        int id=(int)JTpasajes.getValueAt(JTpasajes.getSelectedRow(), 0);
-        if (JOptionPane.showConfirmDialog(null, pasaje.toString() + "\nNota: el pasaje seguira en la tabla con Activo=false "
-                , "¿Desea dar de baja el paquete?", 
-                        JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == 0) {
-            Menu.paqueteData.eliminarPaquete(id);
-            limpiarTabla();
-            cargarPasajes();
+        int id = (int) JTpasajes.getValueAt(JTpasajes.getSelectedRow(), 0);
+        if (pasaje.isActivo()) {
+            if (JOptionPane.showConfirmDialog(null, pasaje.toString() + "\nNota: el pasaje seguira en la tabla con Activo=false ",
+                     "¿Desea dar de baja el paquete?",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                Menu.paqueteData.eliminarPaquete(id);
+                limpiarTabla();
+                cargarPasajes();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El pasaje ya esta inhabilitado");
         }
     }//GEN-LAST:event_JBeliminarActionPerformed
 
@@ -296,13 +270,22 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
 
     private void JTpasajesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTpasajesMouseReleased
         // TODO add your handling code here:
+        int id=(int)JTpasajes.getValueAt(JTpasajes.getSelectedRow(), 0);
+        pasaje=new Pasaje();
+        pasaje=Menu.pasajeData.buscarPasaje(id);
+        JTFid.setText(Integer.toString(id));
+        JCBciudad.removeAllItems();
+        int posCiudad=cargarComboCiudad();
+        JCBciudad.setSelectedIndex(posCiudad);
+        JCBtipo.setSelectedItem(pasaje.getTipoTransporte());
+        JTFcosto.setText(Double.toString(pasaje.getCosto()));
+        JRBestado.setSelected(pasaje.isActivo());
         JBeliminar.setEnabled(true);
         JBguardar.setText("Modificar");
     }//GEN-LAST:event_JTpasajesMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBbuscar;
     private javax.swing.JButton JBeliminar;
     private javax.swing.JButton JBguardar;
     private javax.swing.JButton JBsalir;
@@ -337,9 +320,9 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
         }
     }
     private void cargarPasajes() {
-        List<Pasaje> pasajes=Menu.pasajeData.listarPasajes();
+        
         try {
-            //List<Pasaje> pasajes=Menu.pasajeData.listarPasajes();
+            List<Pasaje> pasajes=Menu.pasajeData.listarPasajes();
             for (Pasaje aux : pasajes) {
                 modelo.addRow(new Object[]{
                     aux.getIdPasaje(),
@@ -358,13 +341,27 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
             });
         }
     }
-    private void cargarComboCiudad() {
+    private int cargarComboCiudad() {
         JCBciudad.addItem(null);
+        List<Ciudad> ciudades=Menu.ciudadData.listarCiudades();
+        int pos=-1;
+        
+        if (JTpasajes.getSelectedRow() != -1) {
+            Ciudad ciudad=(Ciudad)JTpasajes.getValueAt(JTpasajes.getSelectedRow(), 1);
+            for (Ciudad aux : ciudades) {
 
-        for (Ciudad ciudad : Menu.ciudadData.listarCiudades()) {
-            
-            JCBciudad.addItem(ciudad);
+                JCBciudad.addItem(aux);
+                if (aux.getIdCiudad()==ciudad.getIdCiudad()) {
+                    pos = ciudades.indexOf(aux);
+                }
+            }
+        }else{
+            for (Ciudad aux : ciudades) {
+
+                JCBciudad.addItem(aux);
+            }
         }
+        return pos + 1;
     }
     private void cargarComboTipo(){
      JCBtipo.addItem(null);
@@ -373,4 +370,22 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
      JCBtipo.addItem("colectivo");
      JCBtipo.addItem("auto");
     }
+    
+    
+    /*buscar
+    List<Pasaje> pasajes=Menu.pasajeData.listarPasajes();
+        int bandera=0;
+        for(Pasaje pas: pasajes){
+            if(Integer.parseInt(JTFid.getText())==pas.getIdPasaje()){
+                bandera=1;
+                JTpasajes.setRowSelectionInterval(pasajes.indexOf(pas), pasajes.indexOf(pas));
+                break;
+            }
+        }
+        if(bandera==0){
+            JOptionPane.showMessageDialog(null, "El id no corresponde a ningun pasaje existente");
+        }else{
+            JBeliminar.setEnabled(true);
+            JBguardar.setText("Modificar");
+        }*/
 }

@@ -54,8 +54,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="JBbuscar" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="JBguardar" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="JBguardar" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                               <Component id="JBsalir" min="-2" max="-2" attributes="0"/>
                               <Component id="JBeliminar" min="-2" max="-2" attributes="0"/>
@@ -76,17 +75,19 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="JLtitulo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="JLid" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTFid" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBbuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="JTFid" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JBguardar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="JLid" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JLtipo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JCBtipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JBguardar" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="JBeliminar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -96,32 +97,24 @@
                   </Group>
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                       <Component id="JCBciudad" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="JBeliminar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JBsalir" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JLcosto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTFcosto" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JLcosto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="JTFcosto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="JLestado" min="-2" max="-2" attributes="0"/>
-                          <Component id="JRBestado" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="JBsalir" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="JLestado" min="-2" max="-2" attributes="0"/>
+                  <Component id="JRBestado" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="198" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="JLnota" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -158,6 +151,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="JTFid">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="JCBtipo">
       <Properties>
@@ -177,14 +173,6 @@
     <Component class="javax.swing.JTextField" name="JTFcosto">
     </Component>
     <Component class="javax.swing.JRadioButton" name="JRBestado">
-    </Component>
-    <Component class="javax.swing.JButton" name="JBbuscar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Buscar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBbuscarActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="JBguardar">
       <Properties>
@@ -239,7 +227,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="JLnota">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nota: Para modificar o eliminar un pasaje debes buscarlo por id o seleccionarlo de la tabla      "/>
+        <Property name="text" type="java.lang.String" value="Nota: Para modificar o eliminar un pasaje debes seleccionarlo de la tabla      "/>
       </Properties>
     </Component>
   </SubComponents>

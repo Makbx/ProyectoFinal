@@ -5,6 +5,7 @@
  */
 package accesoADatos;
 
+import entidades.Ciudad;
 import entidades.Paquete;
 import entidades.Pasaje;
 import java.sql.Connection;
@@ -27,12 +28,15 @@ public class PasajeData {
 
     public PasajeData() {
         con=Conexion.getConexion();
+        this.ciudata=new CiudadData();
     }
     
-    public void guardarPasaje(Pasaje pasaje){
-        String sql="INSERT INTO paquete (idCiudad, costo, tipo, estado)VALUES(?,?,?,?)";
+    public int guardarPasaje(Pasaje pasaje){
+        String sql="INSERT INTO pasaje (idCiudad, costo, tipo, estado)VALUES(?,?,?,?)";
         try{
+            
             PreparedStatement ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            
             ps.setInt(1, pasaje.getCiudadOrigen().getIdCiudad());
             ps.setDouble(2, pasaje.getCosto());
             ps.setString(3, pasaje.getTipoTransporte());
@@ -50,6 +54,7 @@ public class PasajeData {
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
         }
+        return pasaje.getIdPasaje();
     }
     
     public void modificarPasaje(Pasaje pasaje){
@@ -62,9 +67,9 @@ public class PasajeData {
             ps.setString(3, pasaje.getTipoTransporte());
             ps.setBoolean(4, pasaje.isActivo());
             ps.setInt(5,pasaje.getIdPasaje());
-            ps.executeUpdate();
-            ResultSet rs=ps.getGeneratedKeys();
-            if(rs.next()){
+            int exito=ps.executeUpdate();
+            
+            if(exito==1){
                 JOptionPane.showMessageDialog(null, "El pasaje se modifico correctamente");
             }else{
                 JOptionPane.showMessageDialog(null,"Ha ocurrido un error inesperado");
@@ -76,13 +81,13 @@ public class PasajeData {
     }
     
     public void eliminarPasaje(int id){
-        String sql="UPDATE pasaje SET estado=false WHERE idPasaje=?";
+        String sql="UPDATE pasaje SET estado = false WHERE idPasaje=?";
         try{
             PreparedStatement ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
-            ps.executeUpdate();
-            ResultSet rs=ps.getGeneratedKeys();
-            if(rs.next()){
+            int exito=ps.executeUpdate();
+            
+            if(exito==1){
                 JOptionPane.showMessageDialog(null, "Se dio de baja el pasaje");
             }else{
                 JOptionPane.showMessageDialog(null,"Ha ocurrido un error inesperado");
@@ -94,14 +99,16 @@ public class PasajeData {
     }
     
     public Pasaje buscarPasaje(int id){
-        String sql ="SELECT* FROM paquete WHERE idPaquete=?";
-        Pasaje pasaje=new Pasaje();
+        String sql ="SELECT* FROM pasaje WHERE idPasaje=?";
+        pasaje=null;
         try {
             PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1,id);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
+                pasaje=new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("idPasaje"));
-                //pasaje.setCiudadOrigen(ciudata.buscarCiudad(rs.getInt("idCiudad")));
+                pasaje.setCiudadOrigen(ciudata.buscarCiudadPorId(rs.getInt("idCiudad")));
                 pasaje.setCosto(rs.getDouble("costo"));
                 pasaje.setTipoTransporte(rs.getString("tipo"));
                 pasaje.setActivo(rs.getBoolean("estado"));
@@ -110,29 +117,59 @@ public class PasajeData {
             }
             ps.close();
         } catch (SQLException ex) {
+            //
             JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
         }
         return pasaje;
     }
     
     public List<Pasaje> listarPasajes(){
+        
         String sql ="SELECT* FROM pasaje";
         List<Pasaje> pasajes = new ArrayList<>();
         
         try {
             PreparedStatement ps= con.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
+            
             while(rs.next()){
                 pasaje=new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("idPasaje"));
-               // pasaje.setCiudadOrigen(ciudata.buscarCiudad(rs.getInt("idCiudad")));
                 pasaje.setCosto(rs.getDouble("costo"));
                 pasaje.setTipoTransporte(rs.getString("tipo"));
                 pasaje.setActivo(rs.getBoolean("estado"));
+                pasaje.setCiudadOrigen(ciudata.buscarCiudadPorId(rs.getInt("idCiudad")));
                 pasajes.add(pasaje);
             }
             ps.close();
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return pasajes;
+    }
+    
+    public List<Pasaje> listarPasajesPorCiudad(Ciudad ciudad){
+        
+        String sql ="SELECT* FROM pasaje WHERE idCiudad =?";
+        List<Pasaje> pasajes = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, ciudad.getIdCiudad());
+            ResultSet rs=ps.executeQuery();
+            
+            while(rs.next()){
+                pasaje=new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setCosto(rs.getDouble("costo"));
+                pasaje.setTipoTransporte(rs.getString("tipo"));
+                pasaje.setActivo(rs.getBoolean("estado"));
+                pasaje.setCiudadOrigen(ciudata.buscarCiudadPorId(rs.getInt("idCiudad")));
+                pasajes.add(pasaje);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            //Error al acceder a la base de datos
             JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
         }
         return pasajes;
