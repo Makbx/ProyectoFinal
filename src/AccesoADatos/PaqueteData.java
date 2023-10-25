@@ -121,11 +121,16 @@ public class PaqueteData {
         return paquete;
     }
     
-    public List<Paquete> listarPaquetesPorOrigen(int idCiudad){
+    public List<Paquete> listarPaquetesPorOrigen(int idCiudad,int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM paquete WHERE idCiudad_origen=?";
+        }else{
+            sql ="SELECT* FROM paquete WHERE idCiudad_origen=? AND estado=true";
+        }
         
-        String sql ="SELECT* FROM paquete WHERE idCiudad_origen=?";
         List<Paquete> paquetes = new ArrayList<>();
-        Paquete paquete=null;
+        paquete=null;
         try {
             PreparedStatement ps= con.prepareStatement(sql);
             ps.setInt(1, idCiudad);
@@ -147,10 +152,107 @@ public class PaqueteData {
         return paquetes;
     }
     
-    public List<Paquete> listarPaquetes(){
-        String sql ="SELECT* FROM paquete";
+    public List<Paquete> listarPaquetesPorDestino(int idCiudad,int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM paquete WHERE idCiudad_destino=?";
+        }else{
+            sql ="SELECT* FROM paquete WHERE idCiudad_destino=? AND estado=true";
+        }
+        
         List<Paquete> paquetes = new ArrayList<>();
-        Paquete paquete=null;
+        paquete=null;
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, idCiudad);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                paquete=new Paquete();
+                paquete.setIdPaquete(rs.getInt("idPaquete"));
+                paquete.setOrigen(ciuData.buscarCiudadPorId(rs.getInt("idCiudad_origen")));
+                paquete.setDestino(ciuData.buscarCiudadPorId(rs.getInt("idCiudad_destino")));
+                paquete.setAlojamiento(aloData.buscarAlojamientoPorId(rs.getInt("idAlojamiento")));
+                paquete.setPasaje(pasData.buscarPasaje(rs.getInt("idPasaje")));
+                paquete.setActivo(rs.getBoolean("estado"));
+                paquetes.add(paquete);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return paquetes;
+    }
+    public List<Paquete> listarPaquetesPorAlo(int idAlojamiento,int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM paquete WHERE idAlojamiento=?";
+        }else{
+            sql ="SELECT* FROM paquete WHERE idAlojamiento=? AND estado=true";
+        }
+        
+        List<Paquete> paquetes = new ArrayList<>();
+        paquete=null;
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, idAlojamiento);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                paquete=new Paquete();
+                paquete.setIdPaquete(rs.getInt("idPaquete"));
+                paquete.setOrigen(ciuData.buscarCiudadPorId(rs.getInt("idCiudad_origen")));
+                paquete.setDestino(ciuData.buscarCiudadPorId(rs.getInt("idCiudad_destino")));
+                paquete.setAlojamiento(aloData.buscarAlojamientoPorId(rs.getInt("idAlojamiento")));
+                paquete.setPasaje(pasData.buscarPasaje(rs.getInt("idPasaje")));
+                paquete.setActivo(rs.getBoolean("estado"));
+                paquetes.add(paquete);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return paquetes;
+    }
+    public List<Paquete> listarPaquetesPorPasaje(int idPasaje,int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM paquete WHERE idPasaje=?";
+        }else{
+            sql ="SELECT* FROM paquete WHERE idPasaje=? AND estado=true";
+        }
+        
+        List<Paquete> paquetes = new ArrayList<>();
+        paquete=null;
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, idPasaje);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                paquete=new Paquete();
+                paquete.setIdPaquete(rs.getInt("idPaquete"));
+                paquete.setOrigen(ciuData.buscarCiudadPorId(rs.getInt("idCiudad_origen")));
+                paquete.setDestino(ciuData.buscarCiudadPorId(rs.getInt("idCiudad_destino")));
+                paquete.setAlojamiento(aloData.buscarAlojamientoPorId(rs.getInt("idAlojamiento")));
+                paquete.setPasaje(pasData.buscarPasaje(rs.getInt("idPasaje")));
+                paquete.setActivo(rs.getBoolean("estado"));
+                paquetes.add(paquete);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return paquetes;
+    }
+    
+    public List<Paquete> listarPaquetes(int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM paquete";
+        }else{
+            sql ="SELECT* FROM paquete WHERE estado=true";
+        }
+        
+        List<Paquete> paquetes = new ArrayList<>();
+        paquete=null;
         try {
             PreparedStatement ps= con.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();

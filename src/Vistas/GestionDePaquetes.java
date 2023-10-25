@@ -418,7 +418,7 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
     }
     private void cargarPaquetes() {
         try {
-            for (Paquete aux : Menu.paqueteData.listarPaquetes()) {
+            for (Paquete aux : Menu.paqueteData.listarPaquetes(1)) {
                 aux.toString();
                 modelo.addRow(new Object[]{
                     
