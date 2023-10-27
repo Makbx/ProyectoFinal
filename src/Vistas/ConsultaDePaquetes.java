@@ -49,6 +49,7 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
 //        JRBactivos.setEnabled(false);
 //        JRBtodos.setEnabled(false);
         JCBtipoBusqueda.setSelectedIndex(0);
+        
     }
 
     /**
@@ -71,6 +72,7 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         JRBactivos = new javax.swing.JRadioButton();
         JTFid = new javax.swing.JTextField();
         JLid = new javax.swing.JLabel();
+        JBsalir = new javax.swing.JButton();
 
         JLtitulo.setText("Busqueda de Paquetes");
 
@@ -93,6 +95,8 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JTpaquetes.setPreferredSize(new java.awt.Dimension(500, 250));
+        JTpaquetes.getTableHeader().setResizingAllowed(false);
         jScrollPane1.setViewportView(JTpaquetes);
 
         JCBobjetos.addActionListener(new java.awt.event.ActionListener() {
@@ -123,15 +127,19 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
 
         JLid.setText("ID:");
 
+        JBsalir.setText("Salir");
+        JBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBsalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -144,18 +152,21 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(JRBtodos)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
                                         .addComponent(JRBactivos))
-                                    .addComponent(JCBtipoBusqueda, 0, 274, Short.MAX_VALUE)
+                                    .addComponent(JCBtipoBusqueda, 0, 328, Short.MAX_VALUE)
                                     .addComponent(JCBobjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(143, 143, 143))
+                                .addGap(70, 70, 70)
+                                .addComponent(JBsalir))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(79, 79, 79)
-                                        .addComponent(JLtitulo))
-                                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(JLtitulo))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,10 +174,11 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JLtitulo)
-                .addGap(27, 27, 27)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLbuscar)
-                    .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBsalir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(JLobjetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -191,6 +203,7 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         limpiarComboObjetos();
         JRBactivos.setEnabled(true);
+        JTFid.setText("");
         switch (JCBtipoBusqueda.getSelectedIndex()) {
             case 0:
                 JLobjetos.setVisible(false);
@@ -204,6 +217,8 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
 //                JRBactivos.setEnabled(true);
 //                JRBtodos.setSelected(true);
 //                JRBactivos.setSelected(false);
+                limpiarTabla();
+                cargarPaquetes();
                 break;
             case 1:
                 JLobjetos.setVisible(false);
@@ -212,7 +227,6 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
                 JLid.setVisible(true);
                 JTFid.setEnabled(true);
                 JTFid.setVisible(true);
-                JTFid.setText("0");
                 JRBactivos.setEnabled(false);
                 break;
             case 2:
@@ -226,8 +240,11 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
                     modeloCombo.addElement(aux);
                 }
                 JCBobjetos.setModel(modeloCombo);
+                JCBobjetos.setSelectedIndex(0);
                 JCBobjetos.setVisible(true);
                 JCBobjetos.setEnabled(true);
+                limpiarTabla();
+                cargarPaquetes();
                 break;
             case 3:
                 JLid.setVisible(false);
@@ -240,42 +257,52 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
                     modeloCombo.addElement(aux);
                 }
                 JCBobjetos.setModel(modeloCombo);
+                
+                JCBobjetos.setSelectedIndex(0);
                 JCBobjetos.setVisible(true);
                 JCBobjetos.setEnabled(true);
+                limpiarTabla();
+                cargarPaquetes();
                 break;
-            case 4:
-                JLid.setVisible(false);
-                JTFid.setEnabled(false);
-                JTFid.setVisible(false);
-                JLobjetos.setText("Alojamientos:");
-                JLobjetos.setVisible(true);
-                List<Alojamiento> alojamientos = Menu.alojamientoData.listarAlojamientos();
-                for (Alojamiento aux : alojamientos) {
-                    modeloCombo.addElement(aux);
-                }
-                JCBobjetos.setModel(modeloCombo);
-                JCBobjetos.setVisible(true);
-                JCBobjetos.setEnabled(true);
-                break;
-            case 5:
-                JLid.setVisible(false);
-                JTFid.setEnabled(false);
-                JTFid.setVisible(false);
-                JLobjetos.setText("Pasajes:");
-                JLobjetos.setVisible(true);
-                List<Pasaje> pasajes = Menu.pasajeData.listarPasajes();
-                for (Pasaje aux : pasajes) {
-                    modeloCombo.addElement(aux);
-                }
-                JCBobjetos.setModel(modeloCombo);
-                JCBobjetos.setVisible(true);
-                JCBobjetos.setEnabled(true);
-                break;
+//            case 4:
+//                
+//                JLid.setVisible(false);
+//                JTFid.setEnabled(false);
+//                JTFid.setVisible(false);
+//                JLobjetos.setText("Alojamientos:");
+//                JLobjetos.setVisible(true);
+//                List<Alojamiento> alojamientos = Menu.alojamientoData.listarAlojamientos();
+//                for (Alojamiento aux : alojamientos) {
+//                    modeloCombo.addElement(aux);
+//                }
+//                JCBobjetos.setModel(modeloCombo);
+//                JCBobjetos.setSelectedIndex(0);
+//                JCBobjetos.setVisible(true);
+//                JCBobjetos.setEnabled(true);
+//                limpiarTabla();
+//                cargarPaquetes();
+//                break;
+//            case 5:
+//                JLid.setVisible(false);
+//                JTFid.setEnabled(false);
+//                JTFid.setVisible(false);
+//                JLobjetos.setText("Pasajes:");
+//                JLobjetos.setVisible(true);
+//                List<Pasaje> pasajes = Menu.pasajeData.listarPasajes();
+//                for (Pasaje aux : pasajes) {
+//                    modeloCombo.addElement(aux);
+//                }
+//                JCBobjetos.setModel(modeloCombo);
+//                JCBobjetos.setSelectedIndex(0);
+//                JCBobjetos.setVisible(true);
+//                JCBobjetos.setEnabled(true);
+//                limpiarTabla();
+//                cargarPaquetes();
+//                break;
         }
         JRBtodos.setSelected(true);
         JRBactivos.setSelected(false);
-        limpiarTabla();
-        cargarPaquetes();
+        
     }//GEN-LAST:event_JCBtipoBusquedaActionPerformed
 
     private void JCBobjetosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBobjetosActionPerformed
@@ -291,31 +318,45 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
 
     private void JRBtodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBtodosActionPerformed
         // TODO add your handling code here:
-        JRBactivos.setSelected(false);
+        if(JRBtodos.isSelected()){
+            JRBactivos.setSelected(false);
+        }else{
+            JRBactivos.setSelected(true);
+        }
         limpiarTabla();
         cargarPaquetes();
     }//GEN-LAST:event_JRBtodosActionPerformed
 
     private void JRBactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBactivosActionPerformed
         // TODO add your handling code here:
-        JRBtodos.setSelected(false);
+        if(JRBactivos.isSelected()){
+            JRBtodos.setSelected(false);
+        }else{
+            JRBtodos.setSelected(true);
+        }
         limpiarTabla();
         cargarPaquetes();
     }//GEN-LAST:event_JRBactivosActionPerformed
 
     private void JTFidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFidActionPerformed
 //        // TODO add your handling code here:
-//        try{
-//            int id=Integer.parseInt(JTFid.getText());
+        try{
+            int id=Integer.parseInt(JTFid.getText());
             limpiarTabla();
             cargarPaquetes();
-//        }catch(NumberFormatException ex){
-//            JOptionPane.showMessageDialog(null, "Ingrese solo numeros enteros");
-//        }
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros enteros");
+        }
     }//GEN-LAST:event_JTFidActionPerformed
+
+    private void JBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBsalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_JBsalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBsalir;
     private javax.swing.JComboBox JCBobjetos;
     private javax.swing.JComboBox<String> JCBtipoBusqueda;
     private javax.swing.JLabel JLbuscar;
@@ -335,7 +376,6 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Alojamiento");
         modeloTabla.addColumn("Pasaje");
         modeloTabla.addColumn("Activo");
-        
         JTpaquetes.setModel(modeloTabla);
     }
     private void limpiarTabla() {
@@ -348,61 +388,66 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         
         List<Paquete> paquetes=new ArrayList();
         int opcion;
-        switch(JCBtipoBusqueda.getSelectedIndex()){
-            case 0:
-                if(JRBtodos.isSelected()){
-                    opcion=1;
-                }else{
-                    opcion=0;
-                }
-                paquetes=Menu.paqueteData.listarPaquetes(opcion);
-                break;
-            case 1:
-                try{
-                    int id = Integer.parseInt(JTFid.getText());
-                    paquetes.add(Menu.paqueteData.buscarPaquete(id));
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Ingrese numeros enteros");
-                }
-                
-                break;
-            case 2:
-                Ciudad origen=(Ciudad)JCBobjetos.getSelectedItem();
-                if(JRBtodos.isSelected()){
-                    opcion=1;
-                }else{
-                    opcion=0;
-                }
-                paquetes=Menu.paqueteData.listarPaquetesPorOrigen(origen.getIdCiudad(), opcion);
-                break;
-            case 3:
-                Ciudad destino=(Ciudad)JCBobjetos.getSelectedItem();
-                if(JRBtodos.isSelected()){
-                    opcion=1;
-                }else{
-                    opcion=0;
-                }
-                paquetes=Menu.paqueteData.listarPaquetesPorDestino(destino.getIdCiudad(), opcion);
-                break;
-            case 4:
-                Alojamiento alo=(Alojamiento)JCBobjetos.getSelectedItem();
-                if(JRBtodos.isSelected()){
-                    opcion=1;
-                }else{
-                    opcion=0;
-                }
-                paquetes=Menu.paqueteData.listarPaquetesPorAlo(alo.getIdAlojamiento(), opcion);
-                break;
-            case 5:
-                Pasaje pasaje=(Pasaje)JCBobjetos.getSelectedItem();
-                if(JRBtodos.isSelected()){
-                    opcion=1;
-                }else{
-                    opcion=0;
-                }
-                paquetes=Menu.paqueteData.listarPaquetesPorPasaje(pasaje.getIdPasaje(), opcion);
-                break;
+        try {
+            switch (JCBtipoBusqueda.getSelectedIndex()) {
+                case 0:
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    paquetes = Menu.paqueteData.listarPaquetes(opcion);
+                    break;
+                case 1:
+                    try {
+                        int id = Integer.parseInt(JTFid.getText());
+                        paquetes.add(Menu.paqueteData.buscarPaquete(id));
+                    } catch (NumberFormatException ex) {
+//                        JOptionPane.showMessageDialog(null, "Ingrese numeros enteros");
+                    }
+
+                    break;
+                case 2:
+                    Ciudad origen = (Ciudad) JCBobjetos.getSelectedItem();
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    paquetes = Menu.paqueteData.listarPaquetesPorOrigen(origen.getIdCiudad(), opcion);
+                    break;
+                case 3:
+                    Ciudad destino = (Ciudad) JCBobjetos.getSelectedItem();
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    paquetes = Menu.paqueteData.listarPaquetesPorDestino(destino.getIdCiudad(), opcion);
+                    break;
+//            case 4:
+//                Alojamiento alo=(Alojamiento)JCBobjetos.getSelectedItem();
+//                if(JRBtodos.isSelected()){
+//                    opcion=1;
+//                }else{
+//                    opcion=0;
+//                }
+//                paquetes=Menu.paqueteData.listarPaquetesPorAlo(alo.getIdAlojamiento(), opcion);
+//                break;
+//            case 5:
+//                Pasaje pasaje=(Pasaje)JCBobjetos.getSelectedItem();
+//                if(JRBtodos.isSelected()){
+//                    opcion=1;
+//                }else{
+//                    opcion=0;
+//                }
+//                paquetes=Menu.paqueteData.listarPaquetesPorPasaje(pasaje.getIdPasaje(), opcion);
+//                break;
+            }
+        }catch(NullPointerException ex){
+            
         }
+        
         
         try {
             for (Paquete aux : paquetes) {
@@ -422,14 +467,13 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
             
         }
     }
-    
     private void cargarComboTipoBusqueda(){
      JCBtipoBusqueda.addItem("Todos");
      JCBtipoBusqueda.addItem("ID");
      JCBtipoBusqueda.addItem("Ciudad de Origen");
      JCBtipoBusqueda.addItem("Ciudad de Destino");
-     JCBtipoBusqueda.addItem("Alojamiento");
-     JCBtipoBusqueda.addItem("Pasaje");
+     //JCBtipoBusqueda.addItem("Alojamiento");
+     //JCBtipoBusqueda.addItem("Pasaje");
     }
     private void limpiarComboObjetos(){
         int f = JCBobjetos.getItemCount() - 1;

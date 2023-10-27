@@ -81,7 +81,7 @@ public class PasajeData {
     }
     
     public void eliminarPasaje(int id){
-        String sql="UPDATE pasaje SET estado = false WHERE idPasaje=?";
+        String sql="UPDATE pasaje SET estado=0 WHERE idPasaje=?";
         try{
             PreparedStatement ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
@@ -120,12 +120,18 @@ public class PasajeData {
             //
             JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
         }
+        
         return pasaje;
     }
     
-    public List<Pasaje> listarPasajes(){
+    public List<Pasaje> listarPasajes(int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM pasaje";
+        }else{
+            sql ="SELECT* FROM pasaje WHERE estado=1";
+        }
         
-        String sql ="SELECT* FROM pasaje";
         List<Pasaje> pasajes = new ArrayList<>();
         
         try {
@@ -148,9 +154,14 @@ public class PasajeData {
         return pasajes;
     }
     
-    public List<Pasaje> listarPasajesPorCiudad(Ciudad ciudad){
+    public List<Pasaje> listarPasajesPorCiudad(Ciudad ciudad,int opcion){
         
-        String sql ="SELECT* FROM pasaje WHERE idCiudad =?";
+        String sql ;
+        if(opcion==1){
+            sql="SELECT* FROM pasaje WHERE idCiudad =?";
+        }else{
+            sql="SELECT* FROM pasaje WHERE idCiudad =? AND estado=1";
+        }
         List<Pasaje> pasajes = new ArrayList<>();
         
         try {
@@ -174,4 +185,68 @@ public class PasajeData {
         }
         return pasajes;
     }
+    
+    public List<Pasaje> listarPasajesPorTransporte(String tipo,int opcion){
+        
+        String sql ;
+        if(opcion==1){
+            sql="SELECT* FROM pasaje WHERE tipo =?";
+        }else{
+            sql="SELECT* FROM pasaje WHERE tipo =? AND estado=1";
+        }
+        List<Pasaje> pasajes = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1,tipo);
+            ResultSet rs=ps.executeQuery();
+            
+            while(rs.next()){
+                pasaje=new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setCosto(rs.getDouble("costo"));
+                pasaje.setTipoTransporte(rs.getString("tipo"));
+                pasaje.setActivo(rs.getBoolean("estado"));
+                pasaje.setCiudadOrigen(ciudata.buscarCiudadPorId(rs.getInt("idCiudad")));
+                pasajes.add(pasaje);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            //Error al acceder a la base de datos
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return pasajes;
+    }
+    public List<Pasaje> listarPasajesPorCostoMaximo(double costo,int opcion){
+        
+        String sql ;
+        if(opcion==1){
+            sql="SELECT* FROM pasaje WHERE costo <=?";
+        }else{
+            sql="SELECT* FROM pasaje WHERE costo <= ? AND estado=1";
+        }
+        List<Pasaje> pasajes = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setDouble(1,costo);
+            ResultSet rs=ps.executeQuery();
+            
+            while(rs.next()){
+                pasaje=new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setCosto(rs.getDouble("costo"));
+                pasaje.setTipoTransporte(rs.getString("tipo"));
+                pasaje.setActivo(rs.getBoolean("estado"));
+                pasaje.setCiudadOrigen(ciudata.buscarCiudadPorId(rs.getInt("idCiudad")));
+                pasajes.add(pasaje);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            //Error al acceder a la base de datos
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return pasajes;
+    }
+
 }

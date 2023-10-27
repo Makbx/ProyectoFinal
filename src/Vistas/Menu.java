@@ -45,6 +45,7 @@ public class Menu extends javax.swing.JFrame {
         JMpaquetes = new javax.swing.JMenu();
         jMciudad = new javax.swing.JMenuItem();
         JMpaquete = new javax.swing.JMenuItem();
+        JMpasajes = new javax.swing.JMenuItem();
         JMciudad = new javax.swing.JMenu();
         JMgestionciudad = new javax.swing.JMenuItem();
         JMgestionAlojamiento = new javax.swing.JMenuItem();
@@ -82,6 +83,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         JMpaquetes.add(JMpaquete);
+
+        JMpasajes.setText("Pasajes");
+        JMpasajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMpasajesActionPerformed(evt);
+            }
+        });
+        JMpaquetes.add(JMpasajes);
 
         jMenuBar1.add(JMpaquetes);
 
@@ -215,7 +224,18 @@ public class Menu extends javax.swing.JFrame {
         JDPescritorio.moveToFront(cdp);  
     }//GEN-LAST:event_JMpaqueteActionPerformed
 
+    private void JMpasajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMpasajesActionPerformed
+        // TODO add your handling code here:
+        ConsultaDePasajes cdp = new ConsultaDePasajes();
+        JDPescritorio.removeAll();
+        JDPescritorio.repaint();
+        cdp.setVisible(true);
+        JDPescritorio.add(cdp);
+        JDPescritorio.moveToFront(cdp); 
+    }//GEN-LAST:event_JMpasajesActionPerformed
+
     /**
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -259,6 +279,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMgestionciudad;
     private javax.swing.JMenuItem JMpaquete;
     private javax.swing.JMenu JMpaquetes;
+    private javax.swing.JMenuItem JMpasajes;
     private javax.swing.JMenu JMsalir;
     private javax.swing.JMenuItem jMciudad;
     private javax.swing.JMenuBar jMenuBar1;

@@ -131,6 +131,8 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JTpaquetes.setPreferredSize(new java.awt.Dimension(500, 250));
+        JTpaquetes.getTableHeader().setResizingAllowed(false);
         JTpaquetes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JTpaquetesMouseClicked(evt);
@@ -149,10 +151,6 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(JLnota, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(94, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,11 +180,12 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
                                 .addGap(43, 43, 43))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(JRBestado)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLnota, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(94, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,9 +227,9 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JRBestado)
                     .addComponent(JLestado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(JLnota)
                 .addGap(73, 73, 73))
         );
@@ -241,51 +240,58 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
         try {
-            if (JBguardar.getText().equals("Guardar")) {
-                if (JCBciudadD.getSelectedIndex() > 0 && JCBciudadO.getSelectedIndex() > 0
-                        && JCBalojamiento.getSelectedIndex() > 0 && JCBpasaje.getSelectedIndex() > 0) {
-                    Ciudad ciudadO = (Ciudad) JCBciudadO.getSelectedItem();
-                    Ciudad ciudadD = (Ciudad) JCBciudadD.getSelectedItem();
-                    Pasaje pasaje = (Pasaje) JCBpasaje.getSelectedItem();
-                    Alojamiento alojamiento = (Alojamiento) JCBalojamiento.getSelectedItem();
-                    Boolean estado=JRBestado.isSelected();
-                    paquete = new Paquete(pasaje, alojamiento, ciudadD, ciudadO, estado);
-                    if (JOptionPane.showConfirmDialog(null, paquete.toString() + "\nNota: por defecto el paquete se guardara "
-                            + "activo, para desactivarlo modifique en la tabla", "¿Desea guardar el paquete?",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-                        Menu.paqueteData.guardarPaquete(paquete);
-                        limpiarTabla();
-                        cargarPaquetes();
+            if (JCBciudadD.getSelectedIndex() > 0 && JCBciudadO.getSelectedIndex() > 0
+                    && JCBalojamiento.getSelectedIndex() > 0 && JCBpasaje.getSelectedIndex() > 0) {
+                if (JCBciudadD.getSelectedIndex() != JCBciudadO.getSelectedIndex()) {
+                    if (JBguardar.getText().equals("Guardar")) {
+
+                        Ciudad ciudadO = (Ciudad) JCBciudadO.getSelectedItem();
+                        Ciudad ciudadD = (Ciudad) JCBciudadD.getSelectedItem();
+                        Pasaje pasaje = (Pasaje) JCBpasaje.getSelectedItem();
+                        Alojamiento alojamiento = (Alojamiento) JCBalojamiento.getSelectedItem();
+                        Boolean estado = JRBestado.isSelected();
+                        paquete = new Paquete(pasaje, alojamiento, ciudadO, ciudadD, estado);
+                        if (JOptionPane.showConfirmDialog(null, paquete.toString() + "\nNota: por defecto el paquete se guardara "
+                                + "activo, para desactivarlo modifique en la tabla", "¿Desea guardar el paquete?",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                            Menu.paqueteData.guardarPaquete(paquete);
+                            limpiarTabla();
+                            cargarPaquetes();
+                        }
+
+                    } else {
+                        paquete = null;
+                        int i = JTpaquetes.getSelectedRow();
+                        int id = (int) JTpaquetes.getValueAt(i, 0);
+                        Ciudad ciudadO = (Ciudad) JCBciudadO.getSelectedItem();
+                        Ciudad ciudadD = (Ciudad) JCBciudadD.getSelectedItem();
+                        Pasaje pasaje = (Pasaje) JCBpasaje.getSelectedItem();
+                        Alojamiento alojamiento = (Alojamiento) JCBalojamiento.getSelectedItem();
+                        Boolean estado = JRBestado.isSelected();
+                        paquete = new Paquete(id, pasaje, alojamiento, ciudadO, ciudadD, estado);
+                        if (JOptionPane.showConfirmDialog(null, "Nuevo paquete:\n" + paquete.toString(),
+                                "¿Desea modificar el paquete?",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+
+                            Menu.paqueteData.modificarPaquete(paquete);
+                            limpiarTabla();
+                            cargarPaquetes();
+
+                        }
+                        JTpaquetes.clearSelection();
+                        JBeliminar.setEnabled(false);
+                        JBguardar.setText("Guardar");
                     }
+                    JCBciudadD.setSelectedIndex(0);
+                    JCBciudadO.setSelectedIndex(0);
+                    JCBalojamiento.removeAllItems();
+                    JCBpasaje.removeAllItems();
+                    JTFid.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Para cargar un paquete debe seleccionar los elementos para el mismo");
+                    JOptionPane.showMessageDialog(null, "Las ciudades de origen y destino no pueden ser iguales");
                 }
             } else {
-                paquete=null;
-                int i = JTpaquetes.getSelectedRow();
-                int id = (int) JTpaquetes.getValueAt(i, 0);
-                Ciudad ciudadO = (Ciudad) JCBciudadO.getSelectedItem();
-                Ciudad ciudadD = (Ciudad) JCBciudadD.getSelectedItem();
-                Pasaje pasaje = (Pasaje) JCBpasaje.getSelectedItem();
-                Alojamiento alojamiento = (Alojamiento) JCBalojamiento.getSelectedItem();
-                Boolean estado = JRBestado.isSelected();
-                paquete = new Paquete(id, pasaje, alojamiento, ciudadD, ciudadO, estado);
-                if (JOptionPane.showConfirmDialog(null, "Nuevo paquete:\n" + paquete.toString(),
-                        "¿Desea modificar el paquete?",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-
-                    Menu.paqueteData.modificarPaquete(paquete);
-                    limpiarTabla();
-                    cargarPaquetes();
-
-                }
-                JCBciudadD.setSelectedIndex(0);
-                JCBciudadO.setSelectedIndex(0);
-                JCBpasaje.setSelectedIndex(0);
-                JTFid.setText("");
-                JTpaquetes.clearSelection();
-                JBeliminar.setEnabled(false);
-                JBguardar.setText("Guardar");
+                JOptionPane.showMessageDialog(null, "Para guardar o modificar un paquete debe seleccionar los elementos para el mismo");
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null,"Ocurrio algo inesperado, intente nuevamente");
@@ -339,7 +345,6 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
         if(JCBciudadO.getSelectedIndex()>0){
             cargarComboPasaje();
         }
-        
     }//GEN-LAST:event_JCBciudadOActionPerformed
 
     private void JCBciudadDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBciudadDActionPerformed
@@ -355,13 +360,13 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
         paquete=Menu.paqueteData.buscarPaquete(id);
         JTFid.setText(Integer.toString(id));
         
-        JCBciudadD.removeAllItems();
-        int posCiudadD=cargarComboCiudadD();
-        JCBciudadD.setSelectedIndex(posCiudadD);
-        
         JCBciudadO.removeAllItems();
         int posCiudadO=cargarComboCiudadO();
         JCBciudadO.setSelectedIndex(posCiudadO);
+        
+        JCBciudadD.removeAllItems();
+        int posCiudadD=cargarComboCiudadD();
+        JCBciudadD.setSelectedIndex(posCiudadD);
         
         int posAlojamiento=cargarComboAlojamiento();
         JCBalojamiento.setSelectedIndex(posAlojamiento);
@@ -407,7 +412,6 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
         modelo.addColumn("Alojamiento");
         modelo.addColumn("Pasaje");
         modelo.addColumn("Activo");
-        
         JTpaquetes.setModel(modelo);
     }
     private void limpiarTabla() {
@@ -437,10 +441,11 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
     }
     private int cargarComboCiudadO() {
         JCBciudadO.addItem(null);
-        Ciudad ciudadD = (Ciudad) JCBciudadD.getSelectedItem();
+
         List<Ciudad> ciudades = Menu.ciudadData.listarCiudades();
         int pos = 0;
         if (JTpaquetes.getSelectedRow() != -1) {
+            
             Ciudad ciudad = (Ciudad) JTpaquetes.getValueAt(JTpaquetes.getSelectedRow(), 1);
             for (Ciudad aux : ciudades) {
                 JCBciudadO.addItem(aux);
@@ -450,30 +455,30 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
                 }
             }
         } else {
+            
             for (Ciudad aux : ciudades) {
 
                 JCBciudadO.addItem(aux);
             }
         }
-            
-            return pos+1;
+
+        return pos + 1;
     }
     private int cargarComboCiudadD() {
-
         JCBciudadD.addItem(null);
-        Ciudad ciudadO = (Ciudad) JCBciudadO.getSelectedItem();
         List<Ciudad> ciudades = Menu.ciudadData.listarCiudades();
         int pos = 0;
         if (JTpaquetes.getSelectedRow() != -1) {
+            
             Ciudad ciudad = (Ciudad) JTpaquetes.getValueAt(JTpaquetes.getSelectedRow(), 2);
             for (Ciudad aux : ciudades) {
                 JCBciudadD.addItem(aux);
-
                 if (ciudad.getIdCiudad() == aux.getIdCiudad()) {
                     pos = ciudades.indexOf(aux);
                 }
             }
         } else {
+            
             for (Ciudad aux : ciudades) {
 
                 JCBciudadD.addItem(aux);
@@ -489,7 +494,7 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
             JCBpasaje.removeAllItems();
             JCBpasaje.addItem(null);
             Ciudad ciudadO = (Ciudad) JCBciudadO.getSelectedItem();
-            List<Pasaje> pasajes = Menu.pasajeData.listarPasajesPorCiudad(ciudadO);
+            List<Pasaje> pasajes = Menu.pasajeData.listarPasajesPorCiudad(ciudadO,1);
             int pos = 0;
             if (JTpaquetes.getSelectedRow() != -1) {
                 Pasaje pasaje = (Pasaje) JTpaquetes.getValueAt(JTpaquetes.getSelectedRow(), 4);

@@ -245,7 +245,7 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
         int id = (int) JTpasajes.getValueAt(JTpasajes.getSelectedRow(), 0);
         if (pasaje.isActivo()) {
             if (JOptionPane.showConfirmDialog(null, pasaje.toString() + "\nNota: el pasaje seguira en la tabla con Activo=false ",
-                     "¿Desea dar de baja el paquete?",
+                     "¿Desea dar de baja el pasaje?",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                 Menu.paqueteData.eliminarPaquete(id);
                 limpiarTabla();
@@ -322,7 +322,7 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
     private void cargarPasajes() {
         
         try {
-            List<Pasaje> pasajes=Menu.pasajeData.listarPasajes();
+            List<Pasaje> pasajes=Menu.pasajeData.listarPasajes(1);
             for (Pasaje aux : pasajes) {
                 modelo.addRow(new Object[]{
                     aux.getIdPasaje(),
@@ -365,10 +365,10 @@ public class GestionDePasajes extends javax.swing.JInternalFrame {
     }
     private void cargarComboTipo(){
      JCBtipo.addItem(null);
-            
+     
      JCBtipo.addItem("avion");
      JCBtipo.addItem("colectivo");
-     JCBtipo.addItem("auto");
+     JCBtipo.addItem("taxi");
     }
     
     
