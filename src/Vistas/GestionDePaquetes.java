@@ -182,10 +182,12 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
                                 .addComponent(JRBestado)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JLnota, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(94, Short.MAX_VALUE))))
+                        .addGap(1, 1, 1)
+                        .addComponent(JLnota, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(94, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,10 +228,11 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JRBestado)
-                    .addComponent(JLestado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JLestado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JLnota)
                 .addGap(73, 73, 73))
         );
@@ -356,7 +359,8 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
 
     private void JTpaquetesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTpaquetesMouseClicked
         // TODO add your handling code here:
-        int id=(int)JTpaquetes.getValueAt(JTpaquetes.getSelectedRow(), 0);
+        try{
+            int id=(int)JTpaquetes.getValueAt(JTpaquetes.getSelectedRow(), 0);
         paquete=Menu.paqueteData.buscarPaquete(id);
         JTFid.setText(Integer.toString(id));
         
@@ -379,6 +383,10 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
         
         JBeliminar.setEnabled(true);
         JBguardar.setText("Modificar");
+        }catch(Exception ex){
+            
+        }
+        
         
         
     }//GEN-LAST:event_JTpaquetesMouseClicked

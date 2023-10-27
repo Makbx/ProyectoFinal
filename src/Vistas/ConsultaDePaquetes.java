@@ -49,6 +49,10 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
 //        JRBactivos.setEnabled(false);
 //        JRBtodos.setEnabled(false);
         JCBtipoBusqueda.setSelectedIndex(0);
+        JLcosto.setEnabled(false);
+        JTFcosto.setEnabled(false);
+        JScantPersonas.setEnabled(false);
+        JBcalcular.setEnabled(false);
         
     }
 
@@ -73,6 +77,17 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         JTFid = new javax.swing.JTextField();
         JLid = new javax.swing.JLabel();
         JBsalir = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        JLcosto = new javax.swing.JLabel();
+        JTFcosto = new javax.swing.JTextField();
+        JScantPersonas = new javax.swing.JSpinner();
+        JBcalcular = new javax.swing.JButton();
+
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         JLtitulo.setText("Busqueda de Paquetes");
 
@@ -97,6 +112,11 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         ));
         JTpaquetes.setPreferredSize(new java.awt.Dimension(500, 250));
         JTpaquetes.getTableHeader().setResizingAllowed(false);
+        JTpaquetes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTpaquetesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTpaquetes);
 
         JCBobjetos.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +154,21 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Nota: para conocer el costo del paquete seleccione de la tabla");
+
+        JLcosto.setText("Costo:");
+
+        JTFcosto.setEditable(false);
+
+        JScantPersonas.setModel(new javax.swing.SpinnerNumberModel(1, 1, 8, 1));
+
+        JBcalcular.setText("Calcular");
+        JBcalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBcalcularActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,7 +176,14 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
+                        .addGap(227, 227, 227)
+                        .addComponent(JLtitulo)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(JLbuscar)
                             .addComponent(JLid)
@@ -149,51 +191,72 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JRBtodos)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
-                                        .addComponent(JRBactivos))
-                                    .addComponent(JCBtipoBusqueda, 0, 328, Short.MAX_VALUE)
-                                    .addComponent(JCBobjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(70, 70, 70)
-                                .addComponent(JBsalir))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(JLtitulo))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)))
+                                .addGap(139, 139, 139))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(JRBtodos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JRBactivos))
+                            .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.Alignment.TRAILING, 0, 328, Short.MAX_VALUE)
+                            .addComponent(JCBobjetos, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(62, 62, 62)
+                        .addComponent(JBsalir)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(228, 228, 228)
+                .addComponent(JLcosto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JScantPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(JBcalcular)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(136, 136, 136))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JLtitulo)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JLbuscar)
-                    .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBsalir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(JLobjetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JCBobjetos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JLid))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JRBtodos)
-                    .addComponent(JRBactivos))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(JBsalir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JLbuscar)
+                            .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(JLobjetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JCBobjetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JLid))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JRBtodos)
+                            .addComponent(JRBactivos))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(JLcosto)
+                                .addComponent(JTFcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JScantPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBcalcular))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -354,19 +417,69 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_JBsalirActionPerformed
 
+    private void JTpaquetesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTpaquetesMouseClicked
+        // TODO add your handling code here:
+        try{
+            JBcalcular.setEnabled(true);
+            JLcosto.setEnabled(true);
+            JTFcosto.setEnabled(true);
+            JScantPersonas.setEnabled(true);
+            int fila=(int)JTpaquetes.getSelectedRow();
+            Pasaje pasaje=(Pasaje)JTpaquetes.getValueAt(fila, 4);
+            double costoPasaje=pasaje.getCosto();
+            Alojamiento alo=(Alojamiento)JTpaquetes.getValueAt(fila, 3);
+            double costoAlojamiento=alo.getCosto();
+            double costoPaquete= costoPasaje+costoAlojamiento;
+            JScantPersonas.setValue(1);
+            JTFcosto.setText(Double.toString(costoPaquete));
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_JTpaquetesMouseClicked
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        JBcalcular.setEnabled(true);
+        JLcosto.setEnabled(false);
+        JTFcosto.setEnabled(false);
+        JScantPersonas.setEnabled(false);
+        JTpaquetes.clearSelection();
+    }//GEN-LAST:event_formMouseClicked
+
+    private void JBcalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBcalcularActionPerformed
+        // TODO add your handling code here:
+        try{
+            int fila=(int)JTpaquetes.getSelectedRow();
+            Pasaje pasaje=(Pasaje)JTpaquetes.getValueAt(fila, 4);
+            double costoPasaje=pasaje.getCosto();
+            Alojamiento alo=(Alojamiento)JTpaquetes.getValueAt(fila, 3);
+            double costoAlojamiento=alo.getCosto();
+            double costoPaquete= costoPasaje+costoAlojamiento;
+            int cantPersonas=(int)JScantPersonas.getValue();
+            JTFcosto.setText(Double.toString(costoPaquete*cantPersonas));
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_JBcalcularActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBcalcular;
     private javax.swing.JButton JBsalir;
     private javax.swing.JComboBox JCBobjetos;
     private javax.swing.JComboBox<String> JCBtipoBusqueda;
     private javax.swing.JLabel JLbuscar;
+    private javax.swing.JLabel JLcosto;
     private javax.swing.JLabel JLid;
     private javax.swing.JLabel JLobjetos;
     private javax.swing.JLabel JLtitulo;
     private javax.swing.JRadioButton JRBactivos;
     private javax.swing.JRadioButton JRBtodos;
+    private javax.swing.JSpinner JScantPersonas;
+    private javax.swing.JTextField JTFcosto;
     private javax.swing.JTextField JTFid;
     private javax.swing.JTable JTpaquetes;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     private void armarCabecera() {
@@ -385,6 +498,10 @@ public class ConsultaDePaquetes extends javax.swing.JInternalFrame {
         }
     }
     private void cargarPaquetes() {
+        JLcosto.setEnabled(false);
+        JTFcosto.setEnabled(false);
+        JScantPersonas.setEnabled(false);
+        JTpaquetes.clearSelection();
         
         List<Paquete> paquetes=new ArrayList();
         int opcion;

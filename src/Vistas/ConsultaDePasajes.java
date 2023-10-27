@@ -92,7 +92,7 @@ public class ConsultaDePasajes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        JTpasajes.setPreferredSize(new java.awt.Dimension(550, 300));
+        JTpasajes.setPreferredSize(new java.awt.Dimension(500, 250));
         jScrollPane1.setViewportView(JTpasajes);
 
         JBsalir.setText("Salir");
@@ -176,8 +176,9 @@ public class ConsultaDePasajes extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JRBtodos)
                     .addComponent(JRBactivos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -414,7 +415,7 @@ public class ConsultaDePasajes extends javax.swing.JInternalFrame {
                     }
                     break;
             }
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
 
         }
         try {
