@@ -4,7 +4,12 @@
  */
 package Vistas;
 
-import Entidades.Ciudad;
+import entidades.Ciudad;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,9 +20,25 @@ public class Ciudades extends javax.swing.JInternalFrame {
     /**
      * Creates new form Ciudades
      */
+    private DefaultComboBoxModel  modeloCombo=new DefaultComboBoxModel(){
+        
+     public boolean isCellEditable(int c, int f){
+            return false;
+        }
+    };
+
+    private DefaultTableModel modeloTabla=new DefaultTableModel(){
+        
+     public boolean isCellEditable(int c, int f){
+            return false;
+        }
+    };
     public Ciudades() {
         initComponents();
-        cargarCombo();
+        armarCabecera();
+        
+        cargarComboTipoBusqueda();
+        JCBtipoBusqueda.setSelectedIndex(0);
     }
 
     /**
@@ -29,22 +50,76 @@ public class Ciudades extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        CBciudadOrigen = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        CBciudadDestino = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        JRBactivos = new javax.swing.JRadioButton();
+        JTFid = new javax.swing.JTextField();
+        JLid = new javax.swing.JLabel();
+        JLtitulo = new javax.swing.JLabel();
+        JLbuscar = new javax.swing.JLabel();
+        JCBtipoBusqueda = new javax.swing.JComboBox<>();
+        JLobjetos = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JTalojamiento = new javax.swing.JTable();
+        JBsalir = new javax.swing.JButton();
+        JRBtodos = new javax.swing.JRadioButton();
+        JTFbuscar = new javax.swing.JTextField();
 
-        jLabel1.setText("Ciudad de Origen:");
+        JRBactivos.setText("Activos");
+        JRBactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JRBactivosActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Ciudad de Destino:");
+        JTFid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTFidActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Fecha de inicio:");
+        JLid.setText("ID:");
 
-        jLabel4.setText("Fecha de fin:");
+        JLtitulo.setText("Busqueda de Alojamientos");
+
+        JLbuscar.setText("Buscar segun:");
+
+        JCBtipoBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBtipoBusquedaActionPerformed(evt);
+            }
+        });
+
+        JTalojamiento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(JTalojamiento);
+
+        JBsalir.setText("Salir");
+        JBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBsalirActionPerformed(evt);
+            }
+        });
+
+        JRBtodos.setText("Todos");
+        JRBtodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JRBtodosActionPerformed(evt);
+            }
+        });
+
+        JTFbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTFbuscarKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,58 +127,331 @@ public class Ciudades extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(CBciudadOrigen, 0, 661, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(CBciudadDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(JBsalir)
+                                .addGap(34, 34, 34)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(286, 286, 286)
+                        .addComponent(JLtitulo)
+                        .addGap(306, 306, 306))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JLbuscar)
+                                .addGap(42, 42, 42)
+                                .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(JLid)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(JLobjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(JTFbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(JRBtodos)
+                                    .addGap(207, 207, 207)
+                                    .addComponent(JRBactivos))))
+                        .addGap(169, 169, 169))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JLtitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JLbuscar)
+                            .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTFbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLobjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLid))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JRBtodos)
+                    .addComponent(JRBactivos))
                 .addGap(18, 18, 18)
-                .addComponent(CBciudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(CBciudadDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(451, Short.MAX_VALUE))
+                .addComponent(JBsalir)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void cargarCombo() {
-        for (Ciudad ciu : Menu.ciudadData.listarCiudades()) {
-            CBciudadOrigen.addItem(ciu);
-            CBciudadDestino.addItem(ciu);
+
+    private void JRBactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBactivosActionPerformed
+        // TODO add your handling code here:
+        if(JRBactivos.isSelected()){
+            JRBtodos.setSelected(false);
+        }else{
+            JRBtodos.setSelected(true);
+        }
+        limpiarTabla();
+        cargarCiudades();
+    }//GEN-LAST:event_JRBactivosActionPerformed
+
+    private void JTFidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFidActionPerformed
+        //        // TODO add your handling code here:
+        try{
+            int id=Integer.parseInt(JTFid.getText());
+            limpiarTabla();
+            cargarCiudades();
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros enteros");
+        }
+    }//GEN-LAST:event_JTFidActionPerformed
+
+    private void JCBtipoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBtipoBusquedaActionPerformed
+        // TODO add your handling code here:
+       // limpiarComboObjetos();
+        JRBactivos.setEnabled(true);
+        JTFid.setText("");
+        switch (JCBtipoBusqueda.getSelectedIndex()) {
+            case 0:
+            JLobjetos.setVisible(false);
+            JTFbuscar.setVisible(false);
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+
+            limpiarTabla();
+            cargarCiudades();
+            break;
+            case 1:
+            JLobjetos.setVisible(false);
+            JTFbuscar.setVisible(false);
+            JLid.setVisible(true);
+            JTFid.setEnabled(true);
+            JTFid.setVisible(true);
+            JRBactivos.setEnabled(false);
+            break;
+            case 2:
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+            JTFbuscar.setVisible(true);
+            JLobjetos.setText("Ciudad:");
+            JLobjetos.setVisible(true);
+            
+            limpiarTabla();
+            cargarCiudades();
+            break;
+            case 3:
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+            JTFbuscar.setVisible(true);
+            JLobjetos.setText("Provincia:");
+            JLobjetos.setVisible(true);
+            
+            limpiarTabla();
+            cargarCiudades();
+            break;
+            case 4:
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+            JTFbuscar.setVisible(true);
+            JLobjetos.setText("Pais:");
+            JLobjetos.setVisible(true);
+            
+            limpiarTabla();
+            cargarCiudades();
+            break;
+        }
+        JRBtodos.setSelected(true);
+        JRBactivos.setSelected(false);
+    }//GEN-LAST:event_JCBtipoBusquedaActionPerformed
+
+    private void JBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBsalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_JBsalirActionPerformed
+
+    private void JRBtodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBtodosActionPerformed
+        // TODO add your handling code here:
+        if(JRBtodos.isSelected()){
+            JRBactivos.setSelected(false);
+        }else{
+            JRBactivos.setSelected(true);
+        }
+        limpiarTabla();
+        cargarCiudades();
+    }//GEN-LAST:event_JRBtodosActionPerformed
+
+    private void JTFbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFbuscarKeyReleased
+        // TODO add your handling code here:
+        //int a=0;
+        if(JRBtodos.isSelected()){
+           // a=1;
+            JRBactivos.setSelected(false);
+        }else{
+            JRBactivos.setSelected(true);
+        }
+        limpiarTabla();
+        cargarCiudades();
+    }//GEN-LAST:event_JTFbuscarKeyReleased
+   
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBsalir;
+    private javax.swing.JComboBox<String> JCBtipoBusqueda;
+    private javax.swing.JLabel JLbuscar;
+    private javax.swing.JLabel JLid;
+    private javax.swing.JLabel JLobjetos;
+    private javax.swing.JLabel JLtitulo;
+    private javax.swing.JRadioButton JRBactivos;
+    private javax.swing.JRadioButton JRBtodos;
+    private javax.swing.JTextField JTFbuscar;
+    private javax.swing.JTextField JTFid;
+    private javax.swing.JTable JTalojamiento;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+    private void armarCabecera() {
+        modeloTabla.addColumn("Id");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Provincia");
+        modeloTabla.addColumn("Pais");
+        modeloTabla.addColumn("Estado");
+        JTalojamiento.setModel(modeloTabla);
+    }
+    private void limpiarTabla() {
+        int f = JTalojamiento.getRowCount() - 1;
+        for (; f >= 0; f--) {
+            modeloTabla.removeRow(f);
         }
     }
+    private void cargarCiudades() {
+     //   JLcosto.setEnabled(false);
+     //   JTFcosto.setEnabled(false);
+     //   JScantPersonas.setEnabled(false);
+        JTalojamiento.clearSelection();
+        
+        List<Ciudad> ciudades=new ArrayList();
+        int opcion;
+        try {
+            switch (JCBtipoBusqueda.getSelectedIndex()) {
+                case 0:
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    ciudades = Menu.ciudadData.listarCiudades(opcion);
+                    break;
+                case 1:
+                    try {
+                        int id = Integer.parseInt(JTFid.getText());
+                        ciudades.add(Menu.ciudadData.buscarCiudadPorId(id));
+                    } catch (NumberFormatException ex) {
+//                        JOptionPane.showMessageDialog(null, "Ingrese numeros enteros");
+                    }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Ciudad> CBciudadDestino;
-    private javax.swing.JComboBox<Ciudad> CBciudadOrigen;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    // End of variables declaration//GEN-END:variables
+                    break;
+                case 2:
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    modeloTabla.setRowCount(0);
+                    for(Ciudad ciu:Menu.ciudadData.listarCiudades(opcion)){
+                        if(ciu.getNombre().startsWith(JTFbuscar.getText())){
+                            modeloTabla.addRow(new Object[]{
+                                ciu.getIdCiudad(),
+                                ciu.getNombre(),
+                                ciu.getPais(),
+                                ciu.getProvincia(),                    
+                                ciu.isActivo()
+                            }); 
+                        }
+                    }
+                    break;
+                case 3:
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    modeloTabla.setRowCount(0);
+                    for(Ciudad ciu:Menu.ciudadData.listarCiudades(opcion)){
+                        if(ciu.getPais().startsWith(JTFbuscar.getText())){
+                            modeloTabla.addRow(new Object[]{
+                                ciu.getIdCiudad(),
+                                ciu.getNombre(),
+                                ciu.getPais(),
+                                ciu.getProvincia(),                    
+                                ciu.isActivo()
+                            }); 
+                        }
+                    }
+                    break;
+                case 4:
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    modeloTabla.setRowCount(0);
+                    for(Ciudad ciu:Menu.ciudadData.listarCiudades(opcion)){
+                        if(ciu.getProvincia().startsWith(JTFbuscar.getText())){
+                            modeloTabla.addRow(new Object[]{
+                                ciu.getIdCiudad(),
+                                ciu.getNombre(),
+                                ciu.getPais(),
+                                ciu.getProvincia(),                    
+                                ciu.isActivo()
+                            }); 
+                        }
+                    }
+                    break;   
+            }
+        }catch(NullPointerException ex){
+            
+        }
+        
+        
+        try {
+            for (Ciudad ciu : ciudades) {
+                ciu.toString();
+                modeloTabla.addRow(new Object[]{
+                    
+                    ciu.getIdCiudad(),
+                    ciu.getNombre(),
+                    ciu.getPais(),
+                    ciu.getProvincia(),                    
+                    ciu.isActivo()
+                });
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
+    private void cargarComboTipoBusqueda(){
+     JCBtipoBusqueda.addItem("Todos");
+     JCBtipoBusqueda.addItem("ID");
+     JCBtipoBusqueda.addItem("Ciudad");
+     JCBtipoBusqueda.addItem("Provincia");
+     JCBtipoBusqueda.addItem("Pais");
+          
+    }
+   /* private void limpiarComboObjetos(){
+        int f = JCBobjetos.getItemCount() - 1;
+        for (; f >= 0; f--) {
+            modeloCombo.removeElementAt(f);
+        }
+    }*/
 }

@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package AccesoADatos;
+package accesoADatos;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-import Entidades.Alojamiento;
+import entidades.Alojamiento;
+import entidades.Ciudad;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class AlojamientoData {
         ArrayList<Alojamiento> alojamientos = new ArrayList<>();
         Alojamiento alojamiento = null;
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 alojamiento = new Alojamiento();
@@ -133,4 +134,126 @@ public class AlojamientoData {
         }
         return alojamientos;
     }  
+    
+    public List<Alojamiento> listarAlojamientosPorCiudad(Ciudad ciudad){
+        String sql = "SELECT * FROM alojamiento WHERE idCiudad=?";
+        ArrayList<Alojamiento> alojamientos = new ArrayList<>();
+        Alojamiento alojamiento = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, ciudad.getIdCiudad());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                alojamiento = new Alojamiento();
+                alojamiento.setIdAlojamiento(rs.getInt("idAlojamiento"));
+                alojamiento.setNombre(rs.getString("nombre"));
+                alojamiento.setCiudad(ciuData.buscarCiudadPorId(rs.getInt("idCiudad")));
+                alojamiento.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                alojamiento.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                alojamiento.setTipo(rs.getString("tipo"));
+                alojamiento.setCosto(rs.getDouble("costoDiario"));
+                alojamiento.setEstado(rs.getBoolean("estado"));
+                alojamientos.add(alojamiento);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alojamiento");
+        }
+        return alojamientos;
+    }
+    public List<Alojamiento> listarAlojamientos(int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM alojamiento";
+        }else{
+            sql ="SELECT* FROM alojamiento WHERE estado=true";
+        }
+        
+        List<Alojamiento> alojamientos = new ArrayList<>();
+        Alojamiento alojamiento=null;
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                alojamiento=new Alojamiento();
+                alojamiento.setIdAlojamiento(rs.getInt("idAlojamiento"));
+                alojamiento.setNombre(rs.getString("nombre"));
+                alojamiento.setCiudad(ciuData.buscarCiudadPorId(rs.getInt("idCiudad")));
+                alojamiento.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                alojamiento.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                alojamiento.setTipo(rs.getString("tipo"));
+                alojamiento.setCosto(rs.getDouble("costoDiario"));
+                alojamiento.setEstado(rs.getBoolean("estado"));
+                alojamientos.add(alojamiento);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return alojamientos;
+    }
+    public List<Alojamiento> listarAlojamientosPorCiudad(int idCiudad,int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM alojamiento WHERE idCiudad=?";
+        }else{
+            sql ="SELECT* FROM alojamiento WHERE idCiudad=? AND estado=true";
+        }
+        
+        List<Alojamiento> alojamientos = new ArrayList<>();
+        Alojamiento alojamiento=null;
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, idCiudad);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                alojamiento=new Alojamiento();
+                alojamiento.setIdAlojamiento(rs.getInt("idAlojamiento"));
+                alojamiento.setNombre(rs.getString("nombre"));
+                alojamiento.setCiudad(ciuData.buscarCiudadPorId(rs.getInt("idCiudad")));
+                alojamiento.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                alojamiento.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                alojamiento.setTipo(rs.getString("tipo"));
+                alojamiento.setCosto(rs.getDouble("costoDiario"));
+                alojamiento.setEstado(rs.getBoolean("estado"));
+                alojamientos.add(alojamiento);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return alojamientos;
+    }
+    public List<Alojamiento> listarAlojamientosPorTipo(String tipo,int opcion){
+        String sql;
+        if(opcion==1){
+            sql ="SELECT* FROM alojamiento WHERE tipo=?";
+        }else{
+            sql ="SELECT* FROM alojamiento WHERE tipo=? AND estado=true";
+        }
+        
+        List<Alojamiento> alojamientos = new ArrayList<>();
+        Alojamiento alojamiento=null;
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, tipo);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                alojamiento=new Alojamiento();
+                alojamiento.setIdAlojamiento(rs.getInt("idAlojamiento"));
+                alojamiento.setNombre(rs.getString("nombre"));
+                alojamiento.setCiudad(ciuData.buscarCiudadPorId(rs.getInt("idCiudad")));
+                alojamiento.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                alojamiento.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                alojamiento.setTipo(rs.getString("tipo"));
+                alojamiento.setCosto(rs.getDouble("costoDiario"));
+                alojamiento.setEstado(rs.getBoolean("estado"));
+                alojamientos.add(alojamiento);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        return alojamientos;
+    }
 }

@@ -4,6 +4,9 @@
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMouseClicked"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -50,7 +53,7 @@
                   <Component id="JDCfin" alignment="0" pref="406" max="32767" attributes="0"/>
                   <Component id="JDCinicio" alignment="0" max="32767" attributes="0"/>
                   <Component id="CBciudades" alignment="0" max="32767" attributes="0"/>
-                  <Component id="JTFalojamiento" alignment="0" max="32767" attributes="0"/>
+                  <Component id="JTFid" alignment="0" max="32767" attributes="0"/>
                   <Component id="RBestado" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="JTFcosto" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
@@ -69,7 +72,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="JTFalojamiento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTFid" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="28" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -147,7 +150,7 @@
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="JDCfin">
     </Component>
-    <Component class="javax.swing.JTextField" name="JTFalojamiento">
+    <Component class="javax.swing.JTextField" name="JTFid">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -188,6 +191,10 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTalojamientoMouseClicked"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTalojamientoMouseReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

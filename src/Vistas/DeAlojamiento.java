@@ -4,6 +4,13 @@
  */
 package Vistas;
 
+import entidades.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author crist
@@ -13,8 +20,25 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
     /**
      * Creates new form DeAlojamiento
      */
+    private DefaultComboBoxModel  modeloCombo=new DefaultComboBoxModel(){
+        
+     public boolean isCellEditable(int c, int f){
+            return false;
+        }
+    };
+
+    private DefaultTableModel modeloTabla=new DefaultTableModel(){
+        
+     public boolean isCellEditable(int c, int f){
+            return false;
+        }
+    };
     public DeAlojamiento() {
         initComponents();
+        armarCabecera();
+        
+        cargarComboTipoBusqueda();
+        JCBtipoBusqueda.setSelectedIndex(0);
     }
 
     /**
@@ -29,7 +53,15 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         JTalojamiento = new javax.swing.JTable();
         JBsalir = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        JRBtodos = new javax.swing.JRadioButton();
+        JRBactivos = new javax.swing.JRadioButton();
+        JTFid = new javax.swing.JTextField();
+        JLid = new javax.swing.JLabel();
+        JLtitulo = new javax.swing.JLabel();
+        JLbuscar = new javax.swing.JLabel();
+        JCBtipoBusqueda = new javax.swing.JComboBox<>();
+        JCBobjetos = new javax.swing.JComboBox();
+        JLobjetos = new javax.swing.JLabel();
 
         JTalojamiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -45,28 +77,111 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(JTalojamiento);
 
         JBsalir.setText("Salir");
+        JBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBsalirActionPerformed(evt);
+            }
+        });
+
+        JRBtodos.setText("Todos");
+        JRBtodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JRBtodosActionPerformed(evt);
+            }
+        });
+
+        JRBactivos.setText("Activos");
+        JRBactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JRBactivosActionPerformed(evt);
+            }
+        });
+
+        JTFid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTFidActionPerformed(evt);
+            }
+        });
+
+        JLid.setText("ID:");
+
+        JLtitulo.setText("Busqueda de Alojamientos");
+
+        JLbuscar.setText("Buscar segun:");
+
+        JCBtipoBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBtipoBusquedaActionPerformed(evt);
+            }
+        });
+
+        JCBobjetos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBobjetosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(292, 292, 292)
+                .addComponent(JLtitulo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(JLid)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLbuscar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JLobjetos, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JCBtipoBusqueda, 0, 380, Short.MAX_VALUE)
+                    .addComponent(JCBobjetos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(118, 118, 118))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(JBsalir)
                         .addGap(34, 34, 34)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(226, 226, 226)
+                .addComponent(JRBtodos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JRBactivos)
+                .addGap(179, 179, 179))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(JLtitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JLbuscar)
+                            .addComponent(JCBtipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JCBobjetos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JLobjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JLid))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JRBtodos)
+                    .addComponent(JRBactivos))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JBsalir)
@@ -76,11 +191,231 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void JRBtodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBtodosActionPerformed
+        // TODO add your handling code here:
+        if(JRBtodos.isSelected()){
+            JRBactivos.setSelected(false);
+        }else{
+            JRBactivos.setSelected(true);
+        }
+        limpiarTabla();
+        cargarAlojamientos();
+    }//GEN-LAST:event_JRBtodosActionPerformed
+
+    private void JRBactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBactivosActionPerformed
+        // TODO add your handling code here:
+        if(JRBactivos.isSelected()){
+            JRBtodos.setSelected(false);
+        }else{
+            JRBtodos.setSelected(true);
+        }
+        limpiarTabla();
+        cargarAlojamientos();
+    }//GEN-LAST:event_JRBactivosActionPerformed
+
+    private void JTFidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFidActionPerformed
+        //        // TODO add your handling code here:
+        try{
+            int id=Integer.parseInt(JTFid.getText());
+            limpiarTabla();
+            cargarAlojamientos();
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros enteros");
+        }
+    }//GEN-LAST:event_JTFidActionPerformed
+
+    private void JCBtipoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBtipoBusquedaActionPerformed
+        // TODO add your handling code here:
+        limpiarComboObjetos();
+        JRBactivos.setEnabled(true);
+        JTFid.setText("");
+        switch (JCBtipoBusqueda.getSelectedIndex()) {
+            case 0:
+            JLobjetos.setVisible(false);
+            JCBobjetos.setVisible(false);
+            JCBobjetos.setEnabled(false);
+
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+
+            limpiarTabla();
+            cargarAlojamientos();
+            break;
+            case 1:
+            JLobjetos.setVisible(false);
+            JCBobjetos.setVisible(false);
+            JCBobjetos.setEnabled(false);
+            JLid.setVisible(true);
+            JTFid.setEnabled(true);
+            JTFid.setVisible(true);
+            JRBactivos.setEnabled(false);
+            break;
+            case 2:
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+            JLobjetos.setText("Ciudades:");
+            JLobjetos.setVisible(true);
+            List<Ciudad> ciudades = Menu.ciudadData.listarCiudades(); // se borro el O
+            for (Ciudad aux : ciudades) {
+                modeloCombo.addElement(aux);
+            }
+            JCBobjetos.setModel(modeloCombo);
+            JCBobjetos.setSelectedIndex(0);
+            JCBobjetos.setVisible(true);
+            JCBobjetos.setEnabled(true);
+            limpiarTabla();
+            cargarAlojamientos();
+            break;
+            case 3:
+            JLid.setVisible(false);
+            JTFid.setEnabled(false);
+            JTFid.setVisible(false);
+            JLobjetos.setText("Tipo:");
+            JLobjetos.setVisible(true);
+            modeloCombo.addElement("Hotel");
+            modeloCombo.addElement("Departamento");
+            modeloCombo.addElement("Hostel");
+            
+            JCBobjetos.setModel(modeloCombo);
+
+            JCBobjetos.setSelectedIndex(0);
+            JCBobjetos.setVisible(true);
+            JCBobjetos.setEnabled(true);
+            limpiarTabla();
+            cargarAlojamientos();
+            break;
+        }
+        JRBtodos.setSelected(true);
+        JRBactivos.setSelected(false);
+
+    }//GEN-LAST:event_JCBtipoBusquedaActionPerformed
+
+    private void JCBobjetosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBobjetosActionPerformed
+        // TODO add your handling code here:
+
+        JRBtodos.setEnabled(true);
+        JRBactivos.setEnabled(true);
+        JRBtodos.setSelected(true);
+        JRBactivos.setSelected(false);
+        limpiarTabla();
+        cargarAlojamientos();
+    }//GEN-LAST:event_JCBobjetosActionPerformed
+
+    private void JBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBsalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_JBsalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBsalir;
+    private javax.swing.JComboBox JCBobjetos;
+    private javax.swing.JComboBox<String> JCBtipoBusqueda;
+    private javax.swing.JLabel JLbuscar;
+    private javax.swing.JLabel JLid;
+    private javax.swing.JLabel JLobjetos;
+    private javax.swing.JLabel JLtitulo;
+    private javax.swing.JRadioButton JRBactivos;
+    private javax.swing.JRadioButton JRBtodos;
+    private javax.swing.JTextField JTFid;
     private javax.swing.JTable JTalojamiento;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    private void armarCabecera() {
+        modeloTabla.addColumn("Id");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Ciudad");
+        modeloTabla.addColumn("Tipo");
+        modeloTabla.addColumn("Costo diario");
+        modeloTabla.addColumn("Estado");
+        JTalojamiento.setModel(modeloTabla);
+    }
+    private void limpiarTabla() {
+        int f = JTalojamiento.getRowCount() - 1;
+        for (; f >= 0; f--) {
+            modeloTabla.removeRow(f);
+        }
+    }
+    private void cargarAlojamientos() {
+     //   JLcosto.setEnabled(false);
+     //   JTFcosto.setEnabled(false);
+     //   JScantPersonas.setEnabled(false);
+        JTalojamiento.clearSelection();
+        
+        List<Alojamiento> alojamientos=new ArrayList();
+        int opcion;
+        try {
+            switch (JCBtipoBusqueda.getSelectedIndex()) {
+                case 0:
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    alojamientos = Menu.alojamientoData.listarAlojamientos(opcion);
+                    break;
+                case 1:
+                    try {
+                        int id = Integer.parseInt(JTFid.getText());
+                        alojamientos.add(Menu.alojamientoData.buscarAlojamientoPorId(id));
+                    } catch (NumberFormatException ex) {
+//                        JOptionPane.showMessageDialog(null, "Ingrese numeros enteros");
+                    }
+
+                    break;
+                case 2:
+                    Ciudad ciu = (Ciudad) JCBobjetos.getSelectedItem();
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    alojamientos = Menu.alojamientoData.listarAlojamientosPorCiudad(ciu.getIdCiudad(), opcion);
+                    break;
+                case 3:
+                    String tipo=(String) JCBobjetos.getSelectedItem();
+                    if (JRBtodos.isSelected()) {
+                        opcion = 1;
+                    } else {
+                        opcion = 0;
+                    }
+                    alojamientos = Menu.alojamientoData.listarAlojamientosPorTipo(tipo, opcion);
+                    break;
+            }
+        }catch(NullPointerException ex){
+            
+        }
+        
+        
+        try {
+            for (Alojamiento alo : alojamientos) {
+                alo.toString();
+                modeloTabla.addRow(new Object[]{
+                    
+                    alo.getIdAlojamiento(),
+                    alo.getNombre(),
+                    alo.getCiudad().getNombre(),
+                    alo.getTipo(),
+                    alo.getCosto(),
+                    alo.isActivo()
+                });
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
+    private void cargarComboTipoBusqueda(){
+     JCBtipoBusqueda.addItem("Todos");
+     JCBtipoBusqueda.addItem("ID");
+     JCBtipoBusqueda.addItem("Ciudad");
+     JCBtipoBusqueda.addItem("Tipo");
+    }
+    private void limpiarComboObjetos(){
+        int f = JCBobjetos.getItemCount() - 1;
+        for (; f >= 0; f--) {
+            modeloCombo.removeElementAt(f);
+        }
+    }
 }

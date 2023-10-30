@@ -1,12 +1,13 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package Entidades;
+package entidades;
 
 /**
  *
- * @author crist
+ * @author santi
  */
 public class Pasaje {
 
@@ -76,6 +77,9 @@ public class Pasaje {
 
     @Override
     public String toString() {
-        return "Pasaje: \n" + "ID: " + idPasaje + ", Origen: " + ciudadOrigen + ", Transporte: " + tipoTransporte + ", Costo: " + costo + ", Activo: " + activo + '}';
+        return  tipoTransporte + "," + costo ;
     }
+    
+    
+    
 }

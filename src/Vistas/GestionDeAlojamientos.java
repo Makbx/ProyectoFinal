@@ -4,11 +4,13 @@
  */
 package Vistas;
 
-import AccesoADatos.CiudadData;
-import Entidades.Alojamiento;
-import Entidades.Ciudad;
+import accesoADatos.CiudadData;
+import entidades.Alojamiento;
+import entidades.Ciudad;
 import java.time.LocalDate;
+import java.util.Date;
 import java.time.ZoneId;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,13 +30,15 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         }
     };
 
-    private Ciudad ciudadSelec;
-    public static CiudadData ciudadData;
+    private Alojamiento alojamiento;
+    
+    //public static CiudadData ciudadData;
     public GestionDeAlojamientos() {
         initComponents();
-        cargarCombo();
         armarCabecera();
         cargartabla();
+        cargarCombo();                
+        //cargarComboCiudad();
 
     }
 
@@ -53,7 +57,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         JDCinicio = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         JDCfin = new com.toedter.calendar.JDateChooser();
-        JTFalojamiento = new javax.swing.JTextField();
+        JTFid = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         JTFtipo = new javax.swing.JTextField();
@@ -69,6 +73,12 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         CBciudades = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         JTFnombre = new javax.swing.JTextField();
+
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Agregando Alojamientos");
 
@@ -95,6 +105,14 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JTalojamiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTalojamientoMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                JTalojamientoMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTalojamiento);
 
         JBsalir.setText("Salir");
@@ -154,7 +172,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                     .addComponent(JDCfin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                     .addComponent(JDCinicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CBciudades, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JTFalojamiento, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTFid, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(RBestado, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JTFcosto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,7 +188,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(JTFalojamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JTFid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -216,39 +234,43 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
 
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
-        if(JTFnombre.getText().isEmpty() || JDCinicio.toString().isEmpty() || JDCfin.toString().isEmpty() || JTFtipo.getText().isEmpty() || JTFcosto.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
-        }else{
-            try {
-                int idAlo;
-                if(JTFalojamiento.getText().isEmpty()){
-                    idAlo = 0;
-                }else{
-                    idAlo = Integer.parseInt(JTFalojamiento.getText());
-                }
-                String nombre = JTFnombre.getText();
-                ciudadSelec = (Ciudad) CBciudades.getSelectedItem();
-                LocalDate fechaIni = JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate fechaFin = JDCfin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                String tipo = JTFtipo.getText();
-                double costo = Double.parseDouble(JTFcosto.getText());// Integer.parseInt(JTFcosto.getText());
-                boolean estado = RBestado.isSelected();
+        try {
+            if (JBguardar.getText().equals("Guardar")) {
+                if(!JTFnombre.getText().isEmpty() || !JDCinicio.toString().isEmpty() || !JDCfin.toString().isEmpty() || !JTFtipo.getText().isEmpty() || !JTFcosto.getText().isEmpty()){
+                    String nombre = JTFnombre.getText();
+                    Ciudad ciudad = (Ciudad) CBciudades.getSelectedItem();
+                    LocalDate fechaIni = JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaFin = JDCfin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    String tipo = JTFtipo.getText();
+                    double costo = Double.parseDouble(JTFcosto.getText());
+                    boolean estado = RBestado.isSelected();
                 
-                Alojamiento alo = new Alojamiento(nombre,ciudadSelec, fechaIni, fechaFin, tipo, costo, estado);
-                if(idAlo == 0){
+                    Alojamiento alo = new Alojamiento(nombre,ciudad, fechaIni, fechaFin, tipo, costo, estado);
                     Menu.alojamientoData.guardadAlojamiento(alo);
-                }else{
-                   Alojamiento aux = Menu.alojamientoData.buscarAlojamientoPorId(idAlo); //Busco si el codigo ya esta en la base de datos
-                    if(aux ==null){
-                        Menu.alojamientoData.guardadAlojamiento(alo);
-                    }else{
-                    alo.setIdAlojamiento(idAlo);
+                    limpiarTabla();
+                    cargartabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos menos id");
+                }
+            }else{  
+                    int i = JTalojamiento.getSelectedRow();
+                    int id = (int) JTalojamiento.getValueAt(i, 0);
+                    String nombre = JTFnombre.getText();
+                    Ciudad ciudad = (Ciudad) CBciudades.getSelectedItem();
+                    LocalDate fechaIni = JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate fechaFin = JDCfin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    String tipo = JTFtipo.getText();
+                    double costo = Double.parseDouble(JTFcosto.getText());
+                    boolean estado = RBestado.isSelected();
+                
+                    Alojamiento alo = new Alojamiento(nombre,ciudad, fechaIni, fechaFin, tipo, costo, estado);
+                    
+                    alo.setIdAlojamiento(id);
                     Menu.alojamientoData.modificarAlojamiento(alo);
-                    }
-                }  
-                //Menu.alojamientoData.guardadAlojamiento(alo);
-
-                JTFalojamiento.setText("");
+                    limpiarTabla();
+                    cargartabla();                
+            }
+                JTFid.setText("");
                 JTFnombre.setText("");
                 JDCinicio.setDate(null);
                 JDCfin.setDate(null);
@@ -257,27 +279,28 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                 RBestado.setSelected(false);
                 limpiarTabla();
                 cargartabla();
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, e);
-                JOptionPane.showMessageDialog(null, "Ingrese los campos correctamente");  
-            }
+            
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null,"para el costo debe ingresar numeros");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,"Ocurrio algo inesperado, intente nuevamente");
         }
     }//GEN-LAST:event_JBguardarActionPerformed
 
     private void JBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBeliminarActionPerformed
         // TODO add your handling code here:
-        if(JTFalojamiento.getText().isEmpty()){
+        if(JTFid.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "El campo id de Alojamiento no puede estar vacio");
         }else{
             try {
-                int idAlo = Integer.parseInt(JTFalojamiento.getText());
+                int idAlo = Integer.parseInt(JTFid.getText());
                 int eleccion = JOptionPane.showConfirmDialog(null, "¿Estas seguro/a de eliminar el alojamiento?","", JOptionPane.YES_NO_OPTION);
                 if(eleccion == JOptionPane.YES_OPTION){
                     Menu.alojamientoData.eliminarAlojamiento(idAlo);
                 }else{
                     JOptionPane.showMessageDialog(null, "No se elimino el alojamiento");
                 }
-                JTFalojamiento.setText("");
+                JTFid.setText("");
                 JTFnombre.setText("");
                 JDCinicio.setDate(null);
                 JDCfin.setDate(null);
@@ -296,6 +319,60 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_JBsalirActionPerformed
+    private void JTalojamientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTalojamientoMouseClicked
+
+        
+    }//GEN-LAST:event_JTalojamientoMouseClicked
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        JTalojamiento.clearSelection();
+        JBeliminar.setEnabled(false);
+        JBguardar.setText("Guardar");
+    }//GEN-LAST:event_formMouseClicked
+
+    private void JTalojamientoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTalojamientoMouseReleased
+        // TODO add your handling code here:
+        try{
+            int id=(int)JTalojamiento.getValueAt(JTalojamiento.getSelectedRow(), 0);
+            alojamiento=Menu.alojamientoData.buscarAlojamientoPorId(id);
+            JTFid.setText(Integer.toString(id));
+            
+            String nombre= alojamiento.getNombre();
+            Ciudad ciudad= alojamiento.getCiudad();
+            //LocalDate fechaIni = alojamiento.getFechaInicio();
+            //LocalDate fechaFin = alojamiento.getFechaFin();
+                        
+            String tipo = alojamiento.getTipo();
+            double costo = alojamiento.getCosto();
+            Boolean estado = alojamiento.isActivo();
+            
+            JTFid.setText(Integer.toString(id));
+            JTFnombre.setText(nombre);
+                        
+            List<Ciudad> ciudades=Menu.ciudadData.listarCiudades();
+            int pos=0;
+            for (Ciudad aux : ciudades) {
+
+                CBciudades.addItem(aux);
+                if (aux.getIdCiudad()==ciudad.getIdCiudad()) {
+                    pos = ciudades.indexOf(aux);
+                }
+            }
+            CBciudades.setSelectedIndex(pos);
+            //LocalDate fechaF =JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            //JDCfin.setDateFormatString(alojamiento.getFechaInicio().toString());
+            
+            JTFtipo.setText(tipo);
+            JTFcosto.setText(Double.toString(costo));
+            RBestado.setSelected(estado);
+        
+            JBeliminar.setEnabled(true);
+            JBguardar.setText("Modificar");
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_JTalojamientoMouseReleased
     private void armarCabecera(){
         modelo.addColumn("ID Alojamiento");
         modelo.addColumn("Nombre");
@@ -341,8 +418,8 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
     private javax.swing.JButton JBsalir;
     private com.toedter.calendar.JDateChooser JDCfin;
     private com.toedter.calendar.JDateChooser JDCinicio;
-    private javax.swing.JTextField JTFalojamiento;
     private javax.swing.JTextField JTFcosto;
+    private javax.swing.JTextField JTFid;
     private javax.swing.JTextField JTFnombre;
     private javax.swing.JTextField JTFtipo;
     private javax.swing.JTable JTalojamiento;

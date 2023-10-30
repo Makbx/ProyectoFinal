@@ -4,9 +4,10 @@
  */
 package Vistas;
 
-import Entidades.Ciudad;
+import entidades.Ciudad;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -57,6 +58,12 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         JTFid = new javax.swing.JTextField();
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+
         jLabel1.setText("Agregando Ciudades");
 
         jLabel2.setText("Pais:");
@@ -99,6 +106,11 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JTciudades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTciudadesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTciudades);
 
         jLabel6.setText("ID de ciudad:");
@@ -181,43 +193,44 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
 
     private void JBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBguardarActionPerformed
         // TODO add your handling code here:
-        if(JTFciudad.getText().isEmpty() || JTFpais.getText().isEmpty() || JTFprovincia.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos menos id");
-        }else{
-            try {
-                int idCiu;
-                if(JTFid.getText().isEmpty()){
-                    idCiu = 0;
-                }else{
-                    idCiu = Integer.parseInt(JTFid.getText());
-                }
-                String nombre = JTFciudad.getText();
-                String pais = JTFpais.getText();
-                String provincia = JTFprovincia.getText();
-                boolean estado = RBestado.isSelected();
+        try {
+            if (JBguardar.getText().equals("Guardar")) {
+                if (JTFpais.getText().equals("") && JTFprovincia.getText().equals("") && !JTFciudad.getText().equals("")) {
+                    String nombre = JTFciudad.getText();
+                    String pais = JTFpais.getText();
+                    String provincia = JTFprovincia.getText();
+                    boolean estado = RBestado.isSelected();
                 
-                Ciudad ciu = new Ciudad(nombre,pais,provincia,estado);
-                Ciudad aux = Menu.ciudadData.buscarCiudadPorNombre(nombre);
-                if(aux == null){
+                    Ciudad ciu = new Ciudad(nombre,provincia,pais,estado);
                     Menu.ciudadData.guardadCiudad(ciu);
                     limpiarTabla();
                     cargartabla();
-                }else if(idCiu != 0){
-                    ciu.setIdCiudad(idCiu);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos menos id");
+                }
+            }else{  
+                    int i = JTciudades.getSelectedRow();
+                    int id = (int) JTciudades.getValueAt(i, 0);
+                    String nombre = JTFciudad.getText();
+                    String pais = JTFpais.getText();
+                    String provincia = JTFprovincia.getText();
+                    boolean estado = RBestado.isSelected();
+                    Ciudad ciu = new Ciudad(nombre,provincia,pais,estado);
+                    ciu.setIdCiudad(id);
                     Menu.ciudadData.modificarCiudad(ciu);
                     limpiarTabla();
-                    cargartabla();
-                }else{
-                  JOptionPane.showMessageDialog(null, "La ciudad ya esta en la base de datos");                      
-                }
-                JTFid.setText("");
-                JTFciudad.setText("");
-                JTFpais.setText("");
-                JTFprovincia.setText("");
-                RBestado.setSelected(false);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Ingrese los campos correctamente");  
+                    cargartabla();                
             }
+            JTFid.setText("");
+            JTFciudad.setText("");
+            JTFpais.setText("");
+            JTFprovincia.setText("");
+            RBestado.setSelected(false);
+            
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null,"para el costo debe ingresar numeros");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null,"Ocurrio algo inesperado, intente nuevamente");
         }
     }//GEN-LAST:event_JBguardarActionPerformed
 
@@ -249,11 +262,44 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
             }
         }  
     }//GEN-LAST:event_JBeliminarActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        JTciudades.clearSelection();
+        JBeliminar.setEnabled(false);
+        JBguardar.setText("Guardar");
+    }//GEN-LAST:event_formMouseClicked
+
+    private void JTciudadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTciudadesMouseClicked
+        // TODO add your handling code here:
+        try{
+            int id=(int)JTciudades.getValueAt(JTciudades.getSelectedRow(), 0);
+            Ciudad ciudad=Menu.ciudadData.buscarCiudadPorId(id);
+            JTFid.setText(Integer.toString(id));
+            
+            String nombre= ciudad.getNombre();
+            String pais = ciudad.getPais();
+            String provincia = ciudad.getProvincia();
+            Boolean estado = ciudad.isActivo();
+            
+            JTFid.setText(Integer.toString(id));
+            JTFpais.setText(pais);
+            JTFprovincia.setText(provincia);
+            JTFciudad.setText(nombre);
+            RBestado.setSelected(estado);
+        
+            JBeliminar.setEnabled(true);
+            JBguardar.setText("Modificar");
+        }catch(Exception ex){
+            
+        }
+    }//GEN-LAST:event_JTciudadesMouseClicked
     private void armarCabecera(){
         modelo.addColumn("Id");
         modelo.addColumn("Ciudad");
+        modelo.addColumn("Provincia");     
         modelo.addColumn("Pais");
-        modelo.addColumn("Provincia");
+        modelo.addColumn("Estado");
         
         JTciudades.setModel(modelo);  
     }
@@ -268,8 +314,9 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{
                     ciudad.getIdCiudad(),
                     ciudad.getNombre(),
-                    ciudad.getPais(),
-                    ciudad.getProvincia()
+                    ciudad.getProvincia(),
+                    ciudad.getPais(),                    
+                    ciudad.isActivo()
                 });
         }
     }
