@@ -32,14 +32,11 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
 
     private Alojamiento alojamiento;
     
-    //public static CiudadData ciudadData;
     public GestionDeAlojamientos() {
         initComponents();
         armarCabecera();
         cargartabla();
         cargarCombo();                
-        //cargarComboCiudad();
-
     }
 
     /**

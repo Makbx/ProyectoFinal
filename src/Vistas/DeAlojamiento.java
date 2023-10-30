@@ -339,9 +339,6 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
         }
     }
     private void cargarAlojamientos() {
-     //   JLcosto.setEnabled(false);
-     //   JTFcosto.setEnabled(false);
-     //   JScantPersonas.setEnabled(false);
         JTalojamiento.clearSelection();
         
         List<Alojamiento> alojamientos=new ArrayList();
@@ -361,7 +358,7 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
                         int id = Integer.parseInt(JTFid.getText());
                         alojamientos.add(Menu.alojamientoData.buscarAlojamientoPorId(id));
                     } catch (NumberFormatException ex) {
-//                        JOptionPane.showMessageDialog(null, "Ingrese numeros enteros");
+
                     }
 
                     break;

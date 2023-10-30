@@ -217,7 +217,6 @@ public class Ciudades extends javax.swing.JInternalFrame {
 
     private void JCBtipoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBtipoBusquedaActionPerformed
         // TODO add your handling code here:
-       // limpiarComboObjetos();
         JRBactivos.setEnabled(true);
         JTFid.setText("");
         switch (JCBtipoBusqueda.getSelectedIndex()) {
@@ -295,9 +294,7 @@ public class Ciudades extends javax.swing.JInternalFrame {
 
     private void JTFbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFbuscarKeyReleased
         // TODO add your handling code here:
-        //int a=0;
         if(JRBtodos.isSelected()){
-           // a=1;
             JRBactivos.setSelected(false);
         }else{
             JRBactivos.setSelected(true);
@@ -335,9 +332,6 @@ public class Ciudades extends javax.swing.JInternalFrame {
         }
     }
     private void cargarCiudades() {
-     //   JLcosto.setEnabled(false);
-     //   JTFcosto.setEnabled(false);
-     //   JScantPersonas.setEnabled(false);
         JTalojamiento.clearSelection();
         
         List<Ciudad> ciudades=new ArrayList();
@@ -357,7 +351,7 @@ public class Ciudades extends javax.swing.JInternalFrame {
                         int id = Integer.parseInt(JTFid.getText());
                         ciudades.add(Menu.ciudadData.buscarCiudadPorId(id));
                     } catch (NumberFormatException ex) {
-//                        JOptionPane.showMessageDialog(null, "Ingrese numeros enteros");
+
                     }
 
                     break;
@@ -448,10 +442,4 @@ public class Ciudades extends javax.swing.JInternalFrame {
      JCBtipoBusqueda.addItem("Pais");
           
     }
-   /* private void limpiarComboObjetos(){
-        int f = JCBobjetos.getItemCount() - 1;
-        for (; f >= 0; f--) {
-            modeloCombo.removeElementAt(f);
-        }
-    }*/
 }
