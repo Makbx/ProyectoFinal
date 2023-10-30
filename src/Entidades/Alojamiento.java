@@ -111,6 +111,6 @@ public class Alojamiento {
 
     @Override
     public String toString() {
-        return "Alojamiento: \n" + "ID: " + idAlojamiento + ", Ciudad: " + ciudad + ", Inicio: " + fechaInicio + ", Fin: " + fechaFin + ", Tipo: " + tipo + ", Costo: " + costo + ", Activo: " + activo + '}';
+        return idAlojamiento + "," + ciudad + "," + fechaInicio + "," + fechaFin + "," + tipo + "," + costo + "," + activo;
     }
 }

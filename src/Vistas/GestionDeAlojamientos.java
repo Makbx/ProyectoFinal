@@ -247,9 +247,9 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                     limpiarTabla();
                     cargartabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos menos id");
+                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
                 }
-            }else{  
+            }else{
                     int i = JTalojamiento.getSelectedRow();
                     int id = (int) JTalojamiento.getValueAt(i, 0);
                     String nombre = JTFnombre.getText();
@@ -265,7 +265,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                     alo.setIdAlojamiento(id);
                     Menu.alojamientoData.modificarAlojamiento(alo);
                     limpiarTabla();
-                    cargartabla();                
+                    cargartabla();
             }
                 JTFid.setText("");
                 JTFnombre.setText("");
@@ -279,7 +279,10 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
             
         }catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(null,"para el costo debe ingresar numeros");
-        }catch(Exception ex){
+        }catch(NullPointerException ex){
+            JOptionPane.showMessageDialog(null,"Debe llenar todos los campos");
+        }
+        catch(Exception ex){
             JOptionPane.showMessageDialog(null,"Ocurrio algo inesperado, intente nuevamente");
         }
     }//GEN-LAST:event_JBguardarActionPerformed
@@ -339,6 +342,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
             Ciudad ciudad= alojamiento.getCiudad();
             //LocalDate fechaIni = alojamiento.getFechaInicio();
             //LocalDate fechaFin = alojamiento.getFechaFin();
+            Date date = (Date) JDCinicio.getDate();
                         
             String tipo = alojamiento.getTipo();
             double costo = alojamiento.getCosto();
@@ -356,7 +360,8 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
                     pos = ciudades.indexOf(aux);
                 }
             }
-            CBciudades.setSelectedIndex(pos);
+            CBciudades.setSelectedIndex(pos+1);
+            JDCinicio.setDate(date);
             //LocalDate fechaF =JDCinicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             //JDCfin.setDateFormatString(alojamiento.getFechaInicio().toString());
             
@@ -389,6 +394,7 @@ public class GestionDeAlojamientos extends javax.swing.JInternalFrame {
         }
     }
     private void cargarCombo() {
+        CBciudades.addItem(null);
         for (Ciudad ciu : Menu.ciudadData.listarCiudades()) {
             CBciudades.addItem(ciu);
         }

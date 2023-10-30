@@ -115,6 +115,8 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
 
         jLabel6.setText("ID de ciudad:");
 
+        JTFid.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,7 +197,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             if (JBguardar.getText().equals("Guardar")) {
-                if (JTFpais.getText().equals("") && JTFprovincia.getText().equals("") && !JTFciudad.getText().equals("")) {
+                if (!JTFpais.getText().equals("") || !JTFprovincia.getText().equals("") || !JTFciudad.getText().equals("")) {
                     String nombre = JTFciudad.getText();
                     String pais = JTFpais.getText();
                     String provincia = JTFprovincia.getText();
@@ -206,7 +208,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                     limpiarTabla();
                     cargartabla();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos menos id");
+                    JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
                 }
             }else{  
                     int i = JTciudades.getSelectedRow();
@@ -257,6 +259,8 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
                 JTFpais.setText("");
                 JTFprovincia.setText("");
                 RBestado.setSelected(false);
+                limpiarTabla();
+                cargartabla();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null,"Ingrese el id correctamente");
             }
@@ -310,7 +314,7 @@ public class GestionDeCiudades extends javax.swing.JInternalFrame {
         }
     }
     private void cargartabla(){
-        for (Ciudad ciudad : Menu.ciudadData.listarCiudades()) {
+        for (Ciudad ciudad : Menu.ciudadData.listarCiudades(1)) {
                 modelo.addRow(new Object[]{
                     ciudad.getIdCiudad(),
                     ciudad.getNombre(),

@@ -367,8 +367,9 @@ public class Ciudades extends javax.swing.JInternalFrame {
                             modeloTabla.addRow(new Object[]{
                                 ciu.getIdCiudad(),
                                 ciu.getNombre(),
+                                
+                                ciu.getProvincia(),
                                 ciu.getPais(),
-                                ciu.getProvincia(),                    
                                 ciu.isActivo()
                             }); 
                         }
@@ -382,12 +383,13 @@ public class Ciudades extends javax.swing.JInternalFrame {
                     }
                     modeloTabla.setRowCount(0);
                     for(Ciudad ciu:Menu.ciudadData.listarCiudades(opcion)){
-                        if(ciu.getPais().startsWith(JTFbuscar.getText())){
+                        if(ciu.getProvincia().startsWith(JTFbuscar.getText())){
                             modeloTabla.addRow(new Object[]{
                                 ciu.getIdCiudad(),
                                 ciu.getNombre(),
+                                
+                                ciu.getProvincia(),
                                 ciu.getPais(),
-                                ciu.getProvincia(),                    
                                 ciu.isActivo()
                             }); 
                         }
@@ -401,12 +403,13 @@ public class Ciudades extends javax.swing.JInternalFrame {
                     }
                     modeloTabla.setRowCount(0);
                     for(Ciudad ciu:Menu.ciudadData.listarCiudades(opcion)){
-                        if(ciu.getProvincia().startsWith(JTFbuscar.getText())){
+                        if(ciu.getPais().startsWith(JTFbuscar.getText())){
                             modeloTabla.addRow(new Object[]{
                                 ciu.getIdCiudad(),
                                 ciu.getNombre(),
+                                
+                                ciu.getProvincia(),
                                 ciu.getPais(),
-                                ciu.getProvincia(),                    
                                 ciu.isActivo()
                             }); 
                         }
@@ -425,8 +428,8 @@ public class Ciudades extends javax.swing.JInternalFrame {
                     
                     ciu.getIdCiudad(),
                     ciu.getNombre(),
-                    ciu.getPais(),
-                    ciu.getProvincia(),                    
+                    ciu.getProvincia(),
+                    ciu.getPais(),                    
                     ciu.isActivo()
                 });
             }

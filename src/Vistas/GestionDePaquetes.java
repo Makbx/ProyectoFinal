@@ -333,10 +333,6 @@ public class GestionDePaquetes extends javax.swing.JInternalFrame {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
-//        JCBalojamiento.setSelectedIndex(0);
-//        JCBciudadD.setSelectedIndex(0);
-//        JCBciudadO.setSelectedIndex(0);
-//        JCBpasaje.setSelectedIndex(0);
         JTFid.setText("");
         JTpaquetes.clearSelection();
         JBeliminar.setEnabled(false);

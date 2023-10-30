@@ -381,7 +381,7 @@ public class DeAlojamiento extends javax.swing.JInternalFrame {
                     alojamientos = Menu.alojamientoData.listarAlojamientosPorTipo(tipo, opcion);
                     break;
             }
-        }catch(NullPointerException ex){
+        }catch(Exception ex){
             
         }
         
